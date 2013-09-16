@@ -9,10 +9,9 @@
 
   <h:head>
     <f:metadata>
-      <f:viewParam id="taskId" name="taskId" />
+      <f:viewParam id="processDefinitionKey" name="processDefinitionKey" />
       <f:viewParam id="callbackUrl" name="callbackUrl" />
-      <f:event type="preRenderView"
-        listener="#{camunda.taskForm.startTask(taskId, callbackUrl)}" />
+      <f:event type="preRenderView" listener="#{travelApplicationForm.startTask()}" />
     </f:metadata>
   </h:head>
   <h:body>
@@ -80,7 +79,7 @@
       <h:selectBooleanCheckbox id="approvedTravel" value="#{processVariables['approvedTravel']}" />
      </h:panelGrid>
 
-     <h:commandButton id="submit_button" value="Weiter" action="#{camunda.taskForm.completeTask()}" type="submit"/>
+     <h:commandButton id="submit_button" value="Weiter" action="#{travelApplicationForm.completeTask()}" />
     </h:form>
   </h:body>
 

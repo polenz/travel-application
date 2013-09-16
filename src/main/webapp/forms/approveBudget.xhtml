@@ -11,8 +11,7 @@
     <f:metadata>
       <f:viewParam id="taskId" name="taskId" />
       <f:viewParam id="callbackUrl" name="callbackUrl" />
-      <f:event type="preRenderView"
-        listener="#{camunda.taskForm.startTask(taskId, callbackUrl)}" />
+      <f:event type="preRenderView" listener="#{travelApplicationForm.startTask()}" />
     </f:metadata>
   </h:head>
   <h:body>
@@ -20,8 +19,7 @@
     <h:form id="form">
      <h:panelGrid id="grid" columns="3">
       <h:outputLabel for="firstName" value="Vorname" />
-      <h:inputText id="firstName" value="#{processVariables['travelApplication'].firstName}" required="true" requiredMessage="Bitte geben Sie Ihren Vornamen ein." >
-      </h:inputText>
+      <h:inputText id="firstName" value="#{processVariables['travelApplication'].firstName}" required="true" requiredMessage="Bitte geben Sie Ihren Vornamen ein." />
       <h:message for="firstName" style="color:red" />
 
       <h:outputLabel for="lastName" value="Nachname" />
@@ -78,8 +76,7 @@
       <h:selectBooleanCheckbox id="approvedBudget" value="#{processVariables['approvedBudget']}" />
      </h:panelGrid>
 
-     <h:commandButton id="submit_button" value="Weiter" action="#{camunda.taskForm.completeTask()}">
-     </h:commandButton>
+     <h:commandButton id="submit_button" value="Weiter" action="#{travelApplicationForm.completeTask()}" />
     </h:form>
   </h:body>
 

@@ -16,9 +16,6 @@ import org.camunda.bpm.demo.travelapplication.TravelApplicationBean;
 import org.camunda.bpm.demo.travelapplication.model.Project;
 import org.camunda.bpm.demo.travelapplication.model.TravelApplication;
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.TaskService;
-import org.camunda.bpm.engine.cdi.BusinessProcess;
-import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 
 @Named
 @javax.enterprise.context.RequestScoped
@@ -32,26 +29,12 @@ public class TravelApplicationController implements Serializable {
   private RuntimeService runtimeService;
 
   @Inject
-  private TaskService taskService;
-
-  @Inject
   private Instance<Conversation> conversationInstance;
-
-  @Inject
-  @Named("camunda.taskForm")
-  private TaskForm taskForm;
-
-  @Inject
-  private BusinessProcess businessProcess;
 
   @EJB
   private TravelApplicationBean travelApplicationBean;
 
   public void startProcess(String processDefinitionKey, String callbackUrl) throws IOException {
-    if (conversationInstance.get().isTransient()) {
-      conversationInstance.get().begin();
-    }
-
     // set the process variable
     HashMap<String, Object> variables = new HashMap<String, Object>();
     variables.put("travelApplication", travelApplication);

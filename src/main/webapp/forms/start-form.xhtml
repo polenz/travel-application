@@ -13,6 +13,7 @@
     <f:metadata>
       <f:viewParam id="processDefinitionKey" name="processDefinitionKey" />
       <f:viewParam id="callbackUrl" name="callbackUrl" />
+      <f:event type="preRenderView" listener="#{travelApplicationForm.startProcessInstanceByKeyForm()}" />
     </f:metadata>
     <title>Reiseantrag erstellen</title>
   </h:head>
@@ -73,7 +74,7 @@
 	      <h:message for="preferredAccommodation" style="color:red"/>
       </h:panelGrid>
 
-      <h:commandButton id="submit_button" value="Reiseantrag abschicken" action="#{travelApplicationController.startProcess(processDefinitionKey, callbackUrl)}" type="submit" />
+      <h:commandButton id="submit_button" value="Reiseantrag abschicken" action="#{travelApplicationController.startProcess(processDefinitionKey, callbackUrl)}" />
     </h:form>
   </h:body>
 
