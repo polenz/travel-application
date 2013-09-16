@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="sid-a767a528-2233-4ad2-baa0-715079ff369f" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="7.2.5" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL">
+  <dataStore id="sid-50c457e9-43e2-4585-a2cb-080122169ac8" isUnlimited="false" name="Datenbank"/>
+  <collaboration id="sid-9065ed36-1f35-4e12-97ca-aa1800cdbaf6">
+    <participant id="Dienstreiseantrag" name="Dienstreiseantrag" processRef="travel-application"/>
+  </collaboration>
+  <process id="travel-application" name="Dienstreiseantrag" isExecutable="true">
+    <laneSet id="sid-62a68af9-294c-44bf-94dc-bce36c6cc152">
+      <lane id="sid-F1D3D4EB-C7A3-43D1-8C8A-7FCC4E1B9CDF" name="Projektleiter">
+        <flowNodeRef>sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0</flowNodeRef>
+        <flowNodeRef>sid-43134180-FB6A-4ADE-B797-9C89156E43B5</flowNodeRef>
+        <flowNodeRef>sid-0925325B-FE23-482E-80F8-AB9D5F334415</flowNodeRef>
+        <flowNodeRef>sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2</flowNodeRef>
+      </lane>
+      <lane id="sid-34AAD29D-295D-4140-88A8-B61C17632640" name="Abteilungsleiter">
+        <flowNodeRef>sid-01FEA99D-72A7-4548-8E3F-21765C9EF7ED</flowNodeRef>
+        <flowNodeRef>sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8</flowNodeRef>
+        <flowNodeRef>sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40</flowNodeRef>
+      </lane>
+      <lane id="sid-E56E3297-DF1D-4A5C-8FF3-B07E08A5A6A5" name="Reisesachbearbeiter">
+        <flowNodeRef>sid-D0BE7B00-821F-455A-841A-96C716AB2082</flowNodeRef>
+        <flowNodeRef>sid-8F08CF95-BB81-408C-94FA-549568E0CB64</flowNodeRef>
+        <flowNodeRef>sid-BEEFD619-22CE-498B-9E01-B8251098CF5C</flowNodeRef>
+      </lane>
+    </laneSet>
+    <startEvent id="sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0" activiti:formKey="app:forms/start-form.jsf">
+      <outgoing>SequenceFlow_1</outgoing>
+    </startEvent>
+    <dataStoreReference id="sid-8FFE24AF-64B5-4885-BE05-844124358B87" name="Datenbank" dataStoreRef="sid-50c457e9-43e2-4585-a2cb-080122169ac8"/>
+    <sequenceFlow id="SequenceFlow_1" name="" sourceRef="sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0" targetRef="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2"/>
+    <endEvent id="sid-01FEA99D-72A7-4548-8E3F-21765C9EF7ED" name="Dienstreise abgelehnt">
+      <incoming>sid-4CBCB96E-20DC-4B67-82B6-6971F57BA4F2</incoming>
+    </endEvent>
+    <endEvent id="sid-43134180-FB6A-4ADE-B797-9C89156E43B5" name="Dienstreise abgelehnt">
+      <incoming>sid-4A543851-7A9A-4990-84C7-E785A13A68C0</incoming>
+    </endEvent>
+    <endEvent id="sid-D0BE7B00-821F-455A-841A-96C716AB2082" name="Reise gebucht">
+      <incoming>sid-8DD9AEA7-E6A4-4079-B488-F4BBE0A44406</incoming>
+    </endEvent>
+    <exclusiveGateway id="sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8" name="Reise &#xD;&#xA;genehmigt?" gatewayDirection="Diverging">
+      <incoming>sid-3A0AAC9E-226A-46D6-BA35-60EFA39B7FC7</incoming>
+      <outgoing>sid-4CBCB96E-20DC-4B67-82B6-6971F57BA4F2</outgoing>
+      <outgoing>sid-4A3396E5-7F8A-4410-BB47-BB5DD4B6EDE1</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="sid-4CBCB96E-20DC-4B67-82B6-6971F57BA4F2" name="nein" sourceRef="sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8" targetRef="sid-01FEA99D-72A7-4548-8E3F-21765C9EF7ED">
+      <conditionExpression xsi:type="tFormalExpression">#{!approvedTravel}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-4A3396E5-7F8A-4410-BB47-BB5DD4B6EDE1" name="ja" sourceRef="sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8" targetRef="sid-8F08CF95-BB81-408C-94FA-549568E0CB64">
+      <conditionExpression xsi:type="tFormalExpression">#{approvedTravel}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="sid-8F08CF95-BB81-408C-94FA-549568E0CB64" activiti:formKey="app:forms/bookTravel.jsf" activiti:assignee="demo" name="Dienstreise&#xA;buchen" implementation="webService">
+      <incoming>sid-4A3396E5-7F8A-4410-BB47-BB5DD4B6EDE1</incoming>
+      <outgoing>sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC</outgoing>
+    </userTask>
+    <sequenceFlow id="sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC" sourceRef="sid-8F08CF95-BB81-408C-94FA-549568E0CB64" targetRef="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C"/>
+    <serviceTask id="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C" activiti:delegateExpression="#{saveAbsence}" name="Abwesenheit des MA in Datenbank buchen" implementation="webService">
+      <incoming>sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC</incoming>
+      <outgoing>sid-8DD9AEA7-E6A4-4079-B488-F4BBE0A44406</outgoing>
+    </serviceTask>
+    <sequenceFlow id="sid-8DD9AEA7-E6A4-4079-B488-F4BBE0A44406" sourceRef="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C" targetRef="sid-D0BE7B00-821F-455A-841A-96C716AB2082"/>
+    <userTask id="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40" activiti:formKey="app:forms/approveTravel.jsf" activiti:assignee="demo" name="Reise genehmigen" implementation="webService">
+      <incoming>sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902</incoming>
+      <outgoing>sid-3A0AAC9E-226A-46D6-BA35-60EFA39B7FC7</outgoing>
+    </userTask>
+    <sequenceFlow id="sid-3A0AAC9E-226A-46D6-BA35-60EFA39B7FC7" sourceRef="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40" targetRef="sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8"/>
+    <exclusiveGateway id="sid-0925325B-FE23-482E-80F8-AB9D5F334415" name="Budget &#xD;&#xA;genehmigt?" gatewayDirection="Diverging">
+      <incoming>sid-5F66126F-4394-4D7D-8901-924A6580A04D</incoming>
+      <outgoing>sid-4A543851-7A9A-4990-84C7-E785A13A68C0</outgoing>
+      <outgoing>sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="sid-4A543851-7A9A-4990-84C7-E785A13A68C0" name="nein" sourceRef="sid-0925325B-FE23-482E-80F8-AB9D5F334415" targetRef="sid-43134180-FB6A-4ADE-B797-9C89156E43B5">
+      <conditionExpression xsi:type="tFormalExpression">#{!approvedBudget}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902" name="ja" sourceRef="sid-0925325B-FE23-482E-80F8-AB9D5F334415" targetRef="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40">
+      <conditionExpression xsi:type="tFormalExpression">#{approvedBudget}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2" activiti:formKey="app:forms/approveBudget.jsf" activiti:assignee="demo" name="Reisebudget genehmigen" implementation="webService">
+      <incoming>SequenceFlow_1</incoming>
+      <outgoing>sid-5F66126F-4394-4D7D-8901-924A6580A04D</outgoing>
+    </userTask>
+    <sequenceFlow id="sid-5F66126F-4394-4D7D-8901-924A6580A04D" sourceRef="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2" targetRef="sid-0925325B-FE23-482E-80F8-AB9D5F334415"/>
+    <association id="sid-770A0148-E98E-4583-AE04-BCE7F9F4F054" sourceRef="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C" targetRef="sid-8FFE24AF-64B5-4885-BE05-844124358B87"/>
+  </process>
+  <bpmndi:BPMNDiagram id="sid-365fc128-870a-45ef-af30-ff54facc7ef3">
+    <bpmndi:BPMNPlane id="sid-58d32aaa-f09f-4148-ad69-47c4f3121c40" bpmnElement="sid-9065ed36-1f35-4e12-97ca-aa1800cdbaf6">
+      <bpmndi:BPMNShape id="sid-2B7F77AA-D29D-4FEE-86BE-4B98B73CE9D2_gui" bpmnElement="Dienstreiseantrag" isHorizontal="true">
+        <omgdc:Bounds height="693.87" width="1351.3229" x="0.0" y="0.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-F1D3D4EB-C7A3-43D1-8C8A-7FCC4E1B9CDF_gui" bpmnElement="sid-F1D3D4EB-C7A3-43D1-8C8A-7FCC4E1B9CDF" isHorizontal="true">
+        <omgdc:Bounds height="216.32611" width="1321.3229" x="30.0" y="0.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-34AAD29D-295D-4140-88A8-B61C17632640_gui" bpmnElement="sid-34AAD29D-295D-4140-88A8-B61C17632640" isHorizontal="true">
+        <omgdc:Bounds height="222.47618" width="1321.3229" x="30.0" y="216.32611"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-E56E3297-DF1D-4A5C-8FF3-B07E08A5A6A5_gui" bpmnElement="sid-E56E3297-DF1D-4A5C-8FF3-B07E08A5A6A5" isHorizontal="true">
+        <omgdc:Bounds height="255.06772" width="1321.3229" x="30.0" y="438.8023"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2_gui" bpmnElement="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2">
+        <omgdc:Bounds height="80.0" width="100.0" x="192.0" y="62.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-0925325B-FE23-482E-80F8-AB9D5F334415_gui" bpmnElement="sid-0925325B-FE23-482E-80F8-AB9D5F334415" isMarkerVisible="true">
+        <omgdc:Bounds height="40.0" width="40.0" x="361.0" y="82.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="38.0" width="73.0" x="345.0" y="46.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-43134180-FB6A-4ADE-B797-9C89156E43B5_gui" bpmnElement="sid-43134180-FB6A-4ADE-B797-9C89156E43B5">
+        <omgdc:Bounds height="28.0" width="28.0" x="466.0" y="88.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="22.0" width="131.0" x="415.0" y="121.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0_gui" bpmnElement="sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0">
+        <omgdc:Bounds height="30.0" width="30.0" x="98.62709" y="87.06452"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40_gui" bpmnElement="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40">
+        <omgdc:Bounds height="80.0" width="100.0" x="424.0" y="292.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8_gui" bpmnElement="sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8" isMarkerVisible="true">
+        <omgdc:Bounds height="40.0" width="40.0" x="569.0" y="312.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="38.0" width="73.0" x="553.0" y="276.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-01FEA99D-72A7-4548-8E3F-21765C9EF7ED_gui" bpmnElement="sid-01FEA99D-72A7-4548-8E3F-21765C9EF7ED">
+        <omgdc:Bounds height="28.0" width="28.0" x="674.0" y="318.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="22.0" width="131.0" x="623.0" y="351.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-8F08CF95-BB81-408C-94FA-549568E0CB64_gui" bpmnElement="sid-8F08CF95-BB81-408C-94FA-549568E0CB64">
+        <omgdc:Bounds height="80.0" width="100.0" x="638.0" y="466.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C_gui" bpmnElement="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C">
+        <omgdc:Bounds height="80.0" width="100.0" x="783.0" y="466.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-8FFE24AF-64B5-4885-BE05-844124358B87_gui" bpmnElement="sid-8FFE24AF-64B5-4885-BE05-844124358B87">
+        <omgdc:Bounds height="60.0" width="62.0" x="802.0" y="590.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="22.0" width="68.0" x="799.0" y="655.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-D0BE7B00-821F-455A-841A-96C716AB2082_gui" bpmnElement="sid-D0BE7B00-821F-455A-841A-96C716AB2082">
+        <omgdc:Bounds height="28.0" width="28.0" x="928.0" y="492.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="22.0" width="89.0" x="898.0" y="525.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902_gui" bpmnElement="sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="381.0" y="122.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="382.0" y="332.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="424.0" y="332.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="22.0" width="16.0" x="361.0" y="132.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sid-4A543851-7A9A-4990-84C7-E785A13A68C0_gui" bpmnElement="sid-4A543851-7A9A-4990-84C7-E785A13A68C0">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="401.0" y="102.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="466.0" y="102.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="22.0" width="30.0" x="420.0" y="82.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sid-3A0AAC9E-226A-46D6-BA35-60EFA39B7FC7_gui" bpmnElement="sid-3A0AAC9E-226A-46D6-BA35-60EFA39B7FC7">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="524.0" y="332.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="569.0" y="332.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="547.0" y="332.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sid-770A0148-E98E-4583-AE04-BCE7F9F4F054_gui" bpmnElement="sid-770A0148-E98E-4583-AE04-BCE7F9F4F054">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="833.0" y="546.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="833.0" y="590.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC_gui" bpmnElement="sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="738.0" y="506.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="783.0" y="506.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="761.0" y="506.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sid-5F66126F-4394-4D7D-8901-924A6580A04D_gui" bpmnElement="sid-5F66126F-4394-4D7D-8901-924A6580A04D">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="292.0" y="102.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="361.0" y="102.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="315.0" y="102.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sid-4A3396E5-7F8A-4410-BB47-BB5DD4B6EDE1_gui" bpmnElement="sid-4A3396E5-7F8A-4410-BB47-BB5DD4B6EDE1">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="589.0" y="352.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="590.0" y="506.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="638.0" y="506.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="22.0" width="16.0" x="569.0" y="384.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sid-4CBCB96E-20DC-4B67-82B6-6971F57BA4F2_gui" bpmnElement="sid-4CBCB96E-20DC-4B67-82B6-6971F57BA4F2">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="609.0" y="332.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="674.0" y="332.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="22.0" width="30.0" x="631.0" y="312.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sid-8DD9AEA7-E6A4-4079-B488-F4BBE0A44406_gui" bpmnElement="sid-8DD9AEA7-E6A4-4079-B488-F4BBE0A44406">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="883.0" y="506.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="928.0" y="506.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="906.0" y="506.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0_gui" targetElement="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="128.0" y="102.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="192.0" y="102.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="6.0" width="6.0" x="169.0" y="102.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+  <title>camunda BPM</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../webjars/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet" media="screen" />
+    <link href="../webjars/bootstrap-datetimepicker/6aa746736d/css/datetimepicker.css" rel="stylesheet" media="screen" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js" />
+    <script type="text/javascript" src="../webjars/bootstrap/3.0.0/js/bootstrap.js" />
+    <!-- Bootstrap Datetimepicker Docu: http://www.malot.fr/bootstrap-datetimepicker/demo.php -->
+    <script type="text/javascript" src="../webjars/bootstrap-datetimepicker/6aa746736d/js/bootstrap-datetimepicker.js" charset="UTF-8" />
+    <script type="text/javascript">
+       var datePattern = "dd-mm-yyyy hh:ii"; // 'ii' is the same like 'mm' but 'mm' does not work correctly
+       Date.prototype.addDays = function(days) {
+         this.setDate(this.getDate() + days);
+         return this;
+       };
+
+       // use this method to hours and minutes on the now date to '00' 
+       $.date = function(dateObject) {
+         var date = new Date(dateObject);
+         var day = date.getDate();
+         // JavaScript months are 0-11
+         var month = date.getMonth() + 1;
+         var year = date.getFullYear();
+         if (day &#60; 10) {
+           day = "0" + day;
+         };
+         if (month &#60; 10) {
+             month = "0" + month;
+         };
+         return day + "-" + month + "-" + year + " 00:00";
+       };
+
+       $(function() {
+         $('#form\\:startDate').datetimepicker({
+           format: datePattern,
+           startDate: $.date(new Date().addDays(7)),
+           autoclose: true,
+         });
+         $('#form\\:returnDate').datetimepicker({
+           format: datePattern,
+           startDate: $.date(new Date().addDays(7)),
+           autoclose: true,
+         });
+       });
+    </script>
+</h:head>
+
+<h:body>
+<!--   <div class="navbar navbar-fixed-top"> -->
+<!--     <div class="navbar-inner"> -->
+<!--       <div class="container"> -->
+<!--         <a class="brand" href="#">camunda BPM</a> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+
+  <h:panelGroup id="page" layout="block" styleClass="container">
+<!--     <hr /> -->
+    <h:panelGroup id="container" layout="block">
+      <h:panelGroup>
+        <h:panelGroup id="content" layout="block">
+          <h:messages globalOnly="true" />
+          <ui:insert name="content">Main Content</ui:insert>
+        </h:panelGroup>
+      </h:panelGroup>
+      <h:panelGroup id="footer" layout="block">
+        <hr />
+        powered by <a href="http://www.camunda.org">camunda BPM</a>
+      </h:panelGroup>
+    </h:panelGroup>
+  </h:panelGroup>
+
+</h:body>
+</html>
