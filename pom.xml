@@ -164,16 +164,40 @@
             </execution>
           </executions>
         </plugin>
+        <!-- application war file, exclude WebService -->
         <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.3</version>
-        <configuration>
-          <!-- A web.xml is no longer required. -->
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
-      </plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>2.4</version>
+          <configuration>
+            <packagingExcludes>WEB-INF/classes/**/http/**</packagingExcludes>
+          </configuration>
+        </plugin>
+        <!-- war file with WebService implementation -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+           <version>2.4</version>
+           <executions>
+            <execution>
+             <id>assembly</id>
+             <phase>package</phase>
+             <goals>
+              <goal>assembly</goal>
+             </goals>
+             <configuration>
+                <descriptors>
+                 <descriptor>assembly.xml</descriptor>
+                </descriptors>
+                <appendAssemblyId>false</appendAssemblyId>
+                <finalName>${pom.artifactId}-ws</finalName>
+                <outputDirectory>target/</outputDirectory>
+             </configuration>
+            </execution>
+           </executions>
+        </plugin>
     </plugins>
-    
+
     <!-- configure the test directory to get the generated 
     webservice client classes into the class path-->
     <testSourceDirectory>
