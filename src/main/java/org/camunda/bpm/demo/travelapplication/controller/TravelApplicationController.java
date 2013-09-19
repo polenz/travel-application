@@ -75,11 +75,20 @@ public class TravelApplicationController implements Serializable {
   }
 
   public TravelApplication getTravelApplication() {
-    userId = getUser();
+    if (userId == null) {
+      getUser();
+    }
     User user = identityService.createUserQuery().userId(userId).singleResult();
     travelApplication.setFirstName(user.getFirstName());
     travelApplication.setLastName(user.getLastName());
-    // TODO: Abteilung
+    List<Group> departmentList = identityService.createGroupQuery().groupMember(user.getId()).list();
+    if (departmentList != null && !departmentList.isEmpty()) {
+      for (Group group : departmentList) {
+        if ((group.getId().contains("Mitarbeiter") && group.getId().contains("_")) || (!group.getId().contains("_"))) {
+          travelApplication.setDepartment(group.getId());
+        }
+      }
+    }
     return travelApplication;
   }
 
@@ -91,6 +100,9 @@ public class TravelApplicationController implements Serializable {
   }
 
   public List<String> getDepartmentLeader() {
+    if (userId == null) {
+      getUser();
+    }
     List<String> candidateGroupList = new ArrayList<String>();
     List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
     if (groupList != null && !groupList.isEmpty()) {
