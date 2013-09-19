@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
@@ -14,6 +15,8 @@ import javax.enterprise.inject.Instance;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import org.camunda.bpm.demo.travelapplication.TravelApplicationBean;
 import org.camunda.bpm.demo.travelapplication.model.Project;
@@ -33,7 +36,7 @@ public class TravelApplicationController implements Serializable {
 
   private TravelApplication travelApplication = new TravelApplication();
 
-  private User user;
+  private String userId;
 
   @Inject
   private RuntimeService runtimeService;
@@ -72,19 +75,24 @@ public class TravelApplicationController implements Serializable {
   }
 
   public TravelApplication getTravelApplication() {
+    userId = getUser();
+    User user = identityService.createUserQuery().userId(userId).singleResult();
+    travelApplication.setFirstName(user.getFirstName());
+    travelApplication.setLastName(user.getLastName());
+    // TODO: Abteilung
     return travelApplication;
   }
 
   public String getProjectLeader() {
     Project project = travelApplicationBean.findById(Project.class, travelApplication.getProjectNumber());
     String[] names = project.getProjectLeader().split(" ");
-    user = identityService.createUserQuery().userFirstName(names[0]).userLastName(names[1]).singleResult();
-    return user.getId();
+    User projectLeader = identityService.createUserQuery().userFirstName(names[0]).userLastName(names[1]).singleResult();
+    return projectLeader.getId();
   }
 
   public List<String> getDepartmentLeader() {
     List<String> candidateGroupList = new ArrayList<String>();
-    List<Group> groupList = identityService.createGroupQuery().groupMember(user.getId()).list();
+    List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
     if (groupList != null && !groupList.isEmpty()) {
       for (Group group : groupList) {
         if (group.getId().contains("_") && !group.getId().contains("IT")) {
@@ -106,21 +114,24 @@ public class TravelApplicationController implements Serializable {
     return candidateGroupList;
   }
 
-//  public String getUser() {
-//    String user = null;
-//    if (user == null) {
-//        FacesContext context = FacesContext.getCurrentInstance();
-//        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-//        try {
-//            Principal userPrincipal = request.getUserPrincipal();
-//            if (userPrincipal != null) {
-//                user = userPrincipal.getName();
-//            }
-//        } catch (Exception ex) {
-//            log.log(Level.WARNING, "An exception occured during get the login information of the request.", ex);
-//        }
-//    }
-//    return user;
-//  }
+  public String getUser() {
+    if (userId == null) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        try {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+              for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("user-id")) {
+                  userId = cookie.getValue();
+                }
+              }
+            }
+        } catch (Exception ex) {
+            log.log(Level.WARNING, "An exception occured during get the login information of the request.", ex);
+        }
+    }
+    return userId;
+  }
 
 }
