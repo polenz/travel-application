@@ -31,7 +31,7 @@
       <h:message for="department" style="color:red" />
 
       <h:outputLabel for="projectNumber" value="Projekt-Nr" />
-      <h:selectOneMenu id="projectNumber" value="#{processVariables['travelApplication'].projectNumber}" >
+      <h:selectOneMenu id="projectNumber" value="#{processVariables['travelApplication'].projectNumber}" required="true" requiredMessage="Bitte w&#228;hlen Sie ein Projekt aus." >
        <f:selectItems value="#{travelApplicationController.getProjectList()}" var="p" itemLabel="#{p.number}" itemValue="#{p.number}" />
       </h:selectOneMenu>
       <h:message for="projectNumber" />

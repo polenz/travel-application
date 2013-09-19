@@ -18,60 +18,96 @@
     <title>Reiseantrag erstellen</title>
   </h:head>
   <h:body>
-    <h1>Reiseantrag erstellen</h1>
+    <h2>Reiseantrag erstellen</h2>
     <h:form id="form">
-      <h:panelGrid columns="3">
-        <h:outputLabel for="firstName" value="Vorname" />
+      <h:panelGrid columns="2">
+       <h:outputLabel for="firstName" value="Vorname" />
+       <h:panelGroup>
 	      <h:inputText id="firstName" value="#{travelApplicationController.travelApplication.firstName}" required="true" requiredMessage="Bitte geben Sie Ihren Vornamen ein." />
 	      <h:message for="firstName" style="color:red"/>
+       </h:panelGroup>
 
-	      <h:outputLabel for="lastName" value="Nachname" />
+       <h:outputLabel for="lastName" value="Nachname" />
+       <h:panelGroup>
 	      <h:inputText id="lastName" value="#{travelApplicationController.travelApplication.lastName}" required="true" requiredMessage="Bitte geben Sie Ihren Nachnamen ein." />
 	      <h:message for="lastName" style="color:red"/>
+       </h:panelGroup>
 
-	      <h:outputLabel for="department" value="Abteilung" />
+       <h:outputLabel for="department" value="Abteilung" />
+       <h:panelGroup>
 	      <h:inputText id="department" value="#{travelApplicationController.travelApplication.department}" required="true" requiredMessage="Bitte geben Sie Ihre Abteilung ein." />
 	      <h:message for="department" style="color:red"/>
+	     </h:panelGroup>
 
-	      <h:outputLabel for="projectNumber" value="Projekt-Nr" />
-	      <h:selectOneMenu id="projectNumber" value="#{travelApplicationController.travelApplication.projectNumber}" >
+       <h:outputLabel for="projectNumber" value="Projekt-Nr" />
+       <h:panelGroup>
+	      <h:selectOneMenu id="projectNumber" value="#{travelApplicationController.travelApplication.projectNumber}" required="true" requiredMessage="Bitte w&#228;hlen Sie ein Projekt aus.">
 	       <f:selectItems value="#{travelApplicationController.getProjectList()}" var="p" itemLabel="#{p.number}" itemValue="#{p.number}" />
 	      </h:selectOneMenu>
 	      <h:message for="projectNumber" style="color:red"/>
+	     </h:panelGroup>
 
-	      <h:outputLabel for="reason" value="Zweck der Reise" />
+	     <h:outputLabel for="reason" value="Zweck der Reise" />
+       <h:panelGroup>
 	      <h:inputText id="reason" value="#{travelApplicationController.travelApplication.reason}" required="true" requiredMessage="Bitte geben Sie den Zweck der Reise ein." />
 	      <h:message for="reason" style="color:red"/>
+       </h:panelGroup>
 
-	      <h:outputLabel for="destination" value="Ziel der Reise" />
+	     <h:outputLabel for="destination" value="Ziel der Reise" />
+       <h:panelGroup>
 	      <h:inputText id="destination" value="#{travelApplicationController.travelApplication.destination}" required="true" requiredMessage="Bitte geben Sie das Ziel der Reise ein." />
 	      <h:message for="destination" style="color:red"/>
+	     </h:panelGroup>
 
-	      <h:outputLabel for="startDate" value="Abreisetag (ggf. inkl. Uhrzeit)" />
+		   <h:outputLabel for="startDate" value="Abreisetag (ggf. inkl. Uhrzeit)" />
+       <h:panelGroup>
 	      <h:inputText id="startDate" value="#{travelApplicationController.travelApplication.startDate}" required="true" requiredMessage="Bitte geben Sie das Abreisedatum ein." >
-	        <f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+	         <f:convertDateTime pattern="dd-MM-yyyy" />
 	      </h:inputText>
 	      <h:message for="startDate" style="color:red"/>
 
-	      <h:outputLabel for="returnDate" value="R&#252;ckreisetag (ggf. inkl. Uhrzeit)" />
-        <h:inputText id="returnDate" value="#{travelApplicationController.travelApplication.returnDate}" required="true" requiredMessage="Bitte geben Sie das R&#252;ckreisedatum ein." >
-          <f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
-        </h:inputText>
-        <h:message for="returnDate" style="color:red"/>
+        <div class="bootstrap-timepicker pull-right">
+	        <h:inputText id="startTime" value="#{travelApplicationController.travelApplication.startDate}">
+	          <f:convertDateTime pattern="HH:mm" />
+	        </h:inputText>
+        </div>
+        <h:message for="startTime" style="color:red"/>
+       </h:panelGroup>
 
-	      <h:outputLabel for="costs" value="Gesch&#228;tzte Reisekosten" />
+	     <h:outputLabel for="returnDate" value="R&#252;ckreisetag (ggf. inkl. Uhrzeit)" />
+       <h:panelGroup>
+		      <h:inputText id="returnDate" value="#{travelApplicationController.travelApplication.returnDate}" required="true" requiredMessage="Bitte geben Sie das R&#252;ckreisedatum ein." >
+		        <f:convertDateTime pattern="dd-MM-yyyy" />
+		      </h:inputText>
+	      <h:message for="returnDate" style="color:red"/>
+
+        <div class="bootstrap-timepicker pull-right">
+		      <h:inputText id="returnTime" value="#{travelApplicationController.travelApplication.returnDate}">
+	          <f:convertDateTime pattern="HH:mm" />
+	        </h:inputText>
+	      </div>
+        <h:message for="returnTime" style="color:red"/>
+       </h:panelGroup>
+
+       <h:outputLabel for="costs" value="Gesch&#228;tzte Reisekosten" />
+       <h:panelGroup>
 	      <h:inputText id="costs" value="#{travelApplicationController.travelApplication.costs}" required="true" requiredMessage="Bitte geben Sie die gesch&#228;tzten Reisekosten ein." >
          <f:convertNumber />
 	      </h:inputText>
 	      <h:message for="costs" style="color:red"/>
+	     </h:panelGroup>
 
-	      <h:outputLabel for="preferredTransportationMeans" value="Bevorzugte Verkehrsmittel" />
+       <h:outputLabel for="preferredTransportationMeans" value="Bevorzugte Verkehrsmittel" />
+       <h:panelGroup>
 	      <h:inputText id="preferredTransportationMeans" value="#{travelApplicationController.travelApplication.preferredTransportationMeans}" />
 	      <h:message for="preferredTransportationMeans" style="color:red"/>
-	
-	      <h:outputLabel for="preferredAccommodation" value="Bevorzugte Unterkunft" />
+	     </h:panelGroup>
+
+       <h:outputLabel for="preferredAccommodation" value="Bevorzugte Unterkunft" />
+     	 <h:panelGroup>
 	      <h:inputText id="preferredAccommodation" value="#{travelApplicationController.travelApplication.preferredAccommodation}" />
 	      <h:message for="preferredAccommodation" style="color:red"/>
+	     </h:panelGroup>
       </h:panelGrid>
 
       <h:commandButton id="submit_button" value="Reiseantrag abschicken" action="#{travelApplicationController.startProcess(processDefinitionKey, callbackUrl)}" />
