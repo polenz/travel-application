@@ -131,6 +131,11 @@
       <url>https://app.camunda.com/nexus/content/repositories/camunda-bpm-ee</url>
     </repository>
     <repository>
+      <id>camunda-bpm-nexus</id>
+      <name>camunda-bpm-nexus</name>
+      <url>https://app.camunda.com/nexus/content/groups/public</url>
+    </repository>
+    <repository>
       <id>jboss-public-repository</id>
       <name>JBoss Repository</name>
       <url>http://repository.jboss.org/nexus/content/groups/public</url>
