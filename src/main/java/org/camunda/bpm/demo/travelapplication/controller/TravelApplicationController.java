@@ -57,7 +57,6 @@ public class TravelApplicationController implements Serializable {
     variables.put("lastName", travelApplication.getLastName());
     variables.put("department", travelApplication.getDepartment());
     variables.put("projectNumber", travelApplication.getProjectNumber());
-    variables.put("department", travelApplication.getDepartment());
     variables.put("destination", travelApplication.getDestination());
     variables.put("reason", travelApplication.getReason());
     variables.put("costs", travelApplication.getCosts());

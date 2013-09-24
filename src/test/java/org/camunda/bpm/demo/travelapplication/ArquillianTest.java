@@ -8,14 +8,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.xml.namespace.QName;
 
 import org.camunda.bpm.demo.travelapplication.model.Project;
-import org.camunda.bpm.demo.travelapplication.model.TravelApplication;
 import org.camunda.bpm.demo.travelapplication.ws.Calculate;
 import org.camunda.bpm.demo.travelapplication.ws.CalculateService;
 import org.camunda.bpm.engine.ProcessEngine;
@@ -79,8 +77,6 @@ public class ArquillianTest {
    */
   @Test
   public void testProcessHappyPath() throws Exception {
-    cleanUpRunningProcessInstances();
-
     // get existing project
     Project project = travelApplicationBean.getProjects().get(0);
     if (project == null) {
@@ -92,27 +88,25 @@ public class ArquillianTest {
       travelApplicationBean.insert(project);
     }
 
-    // create travel application input data
-    TravelApplication travelApplication = new TravelApplication();
-    travelApplication.setFirstName("Max");
-    travelApplication.setLastName("Mustermann");
-    travelApplication.setDepartment("camunda BPM");
-    travelApplication.setCosts(320.00);
-    travelApplication.setDestination("Berlin");
-    travelApplication.setReason("Schulung");
-    travelApplication.setPreferredAccommodation("Hotel");
-    travelApplication.setPreferredTransportationMeans("Bahn");
-    travelApplication.setStartDate(new Date());
-
     Calendar calendar = new GregorianCalendar().getInstance();
     calendar.setTime(new Date());
     calendar.add(Calendar.DAY_OF_MONTH, 3);
-    travelApplication.setReturnDate(calendar.getTime());
-
-    travelApplication.setProjectNumber(project.getNumber());
 
     Map<String, Object> variables = new HashMap<String, Object>();
-    variables.put("travelApplication", travelApplication);
+    variables.put("firstName", "Max");
+    variables.put("lastName", "Mustermann");
+    variables.put("department", "camunda BPM");
+    variables.put("projectNumber", project.getNumber());
+    variables.put("destination", "Berlin");
+    variables.put("reason", "Schulung");
+    variables.put("costs", 320.00);
+    variables.put("startDate", new Date());
+    variables.put("startTime", null);
+    variables.put("returnDate", calendar.getTime());
+    variables.put("returnTime", null);
+    variables.put("preferredAccommodation", "Hotel");
+    variables.put("preferredTransportationMeans", "Bahn");
+    variables.put("userId", "demo");
     ProcessInstance processInstance = processEngine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
 
     // complete task 'Reisebudget genehmigen'
@@ -161,16 +155,5 @@ public class ArquillianTest {
     Calculate calculatePort = calculateService.getPort(Calculate.class);
     double sum = calculatePort.sum(1, 1, 1);
     assertEquals(new Double(3), (Double)sum);
-  }
-
-  /**
-   * Helper to delete all running process instances, which might disturb our Arquillian Test case
-   * Better run test cases in a clean environment, but this is pretty handy for demo purposes
-   */
-  private void cleanUpRunningProcessInstances() {
-    List<ProcessInstance> runningInstances = processEngine.getRuntimeService().createProcessInstanceQuery().processDefinitionKey(PROCESS_DEFINITION_KEY).list();
-    for (ProcessInstance processInstance : runningInstances) {
-      processEngine.getRuntimeService().deleteProcessInstance(processInstance.getId(), "deleted to have a clean environment for Arquillian");
-    }
   }
 }
