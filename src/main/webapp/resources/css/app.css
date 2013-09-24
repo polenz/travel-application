@@ -1,4 +1,13 @@
 [class^="icon-"],
 [class*=" icon-"] {
-  background-image: url("../webjars/bootstrap/2.3.2/img/glyphicons-halflings.png");
+  background-image: url("#{resource['img/glyphicons-halflings.png']}");
+}
+
+hr {
+	margin: 10px 0 0;
+}
+
+.login {
+  margin-top: 10px;
+  text-align: right;
 }

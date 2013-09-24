@@ -53,12 +53,12 @@
       <outgoing>sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC</outgoing>
     </userTask>
     <sequenceFlow id="sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC" sourceRef="sid-8F08CF95-BB81-408C-94FA-549568E0CB64" targetRef="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C"/>
-    <serviceTask id="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C" activiti:delegateExpression="#{saveAbsence}" name="Abwesenheit des MA in Datenbank buchen" implementation="webService">
+    <serviceTask id="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C" activiti:expression="${travelApplicationBean.saveAbsence(firstName, lastName, startDate, returnDate, startTime, returnTime, projectNumber)}" name="Abwesenheit des MA in Datenbank buchen" implementation="webService">
       <incoming>sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC</incoming>
       <outgoing>sid-8DD9AEA7-E6A4-4079-B488-F4BBE0A44406</outgoing>
     </serviceTask>
     <sequenceFlow id="sid-8DD9AEA7-E6A4-4079-B488-F4BBE0A44406" sourceRef="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C" targetRef="sid-D0BE7B00-821F-455A-841A-96C716AB2082"/>
-    <userTask id="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40" activiti:formKey="app:forms/approveTravel.jsf" activiti:candidateGroups="#{travelApplicationController.getDepartmentLeader()}" name="Reise genehmigen" implementation="webService">
+    <userTask id="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40" activiti:formKey="app:forms/approveTravel.jsf" activiti:candidateGroups="#{travelApplicationController.getDepartmentLeader(userId)}" name="Reise genehmigen" implementation="webService">
       <incoming>sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902</incoming>
       <outgoing>sid-3A0AAC9E-226A-46D6-BA35-60EFA39B7FC7</outgoing>
     </userTask>
@@ -74,7 +74,7 @@
     <sequenceFlow id="sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902" name="ja" sourceRef="sid-0925325B-FE23-482E-80F8-AB9D5F334415" targetRef="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40">
       <conditionExpression xsi:type="tFormalExpression">#{approvedBudget}</conditionExpression>
     </sequenceFlow>
-    <userTask id="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2" activiti:formKey="app:forms/approveBudget.jsf" activiti:assignee="#{travelApplicationController.getProjectLeader()}" name="Reisebudget genehmigen" implementation="webService">
+    <userTask id="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2" activiti:formKey="app:forms/approveBudget.jsf" activiti:assignee="#{travelApplicationController.getProjectLeader(projectNumber)}" name="Reisebudget genehmigen" implementation="webService">
       <incoming>SequenceFlow_1</incoming>
       <outgoing>sid-5F66126F-4394-4D7D-8901-924A6580A04D</outgoing>
     </userTask>

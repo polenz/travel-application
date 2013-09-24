@@ -7,9 +7,10 @@
 <h:head>
   <title>camunda BPM</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <h:outputStylesheet library="webjars/bootstrap/2.3.2/css" name="bootstrap.css"/>
+  <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/favicon.ico"/>
     <h:outputStylesheet library="webjars/bootstrap-datepicker/1.1.3/css" name="datepicker.css" />
     <h:outputStylesheet library="webjars/bootstrap-timepicker/0.2.3/css" name="bootstrap-timepicker.css" />
+    <h:outputStylesheet library="webjars/bootstrap/2.3.2/css" name="bootstrap.css"/>
     <h:outputStylesheet name="css/app.css" />
 
     <h:outputScript type="text/javascript" library="webjars/jquery/1.10.2" name="jquery.js" />
@@ -18,12 +19,13 @@
     <h:outputScript type="text/javascript" library="webjars/bootstrap-timepicker/0.2.3/js" name="bootstrap-timepicker.js" />
 
     <script type="text/javascript" >
+      // method to add a number of days to the current date
       Date.prototype.addDays = function(days) {
         this.setDate(this.getDate() + days);
         return this;
       };
 
-      // use this method to hours and minutes on the now date to '00'  -->
+      // method to correct the days and months
       $.date = function(dateObject) {
 	      var date = new Date(dateObject);
 	      var day = date.getDate();
@@ -36,85 +38,65 @@
 	      if (month &#60; 10) {
 	         month = "0" + month;
 	      };
-	      return day + "-" + month + "-" + year + " 00:00";
+	      return day + "-" + month + "-" + year;
       };
 
-      $(function() {
+      $(function(){
+        // datepicker: http://www.eyecon.ro/bootstrap-datepicker/
+        var earliestStartDate = $.date(new Date().addDays(7));
         $('#form\\:startDate').datepicker({
           format: 'dd-mm-yyyy',
           autoclose: true,
-          startDate: new Date().addDays(7)
-        });
+          startDate: earliestStartDate
+        })
+        .on('changeDate', function(selected){
+		        earliestReturnDate = new Date(selected.date.valueOf());
+		        earliestReturnDate.setDate(earliestReturnDate.getDate(new Date(selected.date.valueOf())));
+		        $('#form\\:returnDate').datepicker('setStartDate', earliestReturnDate);
+		        $('#form\\:returnDate').val(null);
+		    });
+
         $('#form\\:returnDate').datepicker({
           format: 'dd-mm-yyyy',
           autoclose: true,
-          startDate: new Date().addDays(7)
+        })
+        .on('show', function(selected){
+            var earliestReturnDate = earliestStartDate;
+            var startDate = $('#form\\:startDate').val();
+            if (startDate) {
+              $('#form\\:returnDate').datepicker('setStartDate', startDate);
+            } else {
+              $('#form\\:returnDate').datepicker('setStartDate', earliestStartDate);
+            }
         });
+
+        // timepicker: http://jdewit.github.io/bootstrap-timepicker/
         $('#form\\:startTime').timepicker({
           minuteStep: 5,
           showInputs: false,
-          disableFocus: true
+          disableFocus: true,
+          showMeridian: false,
+          defaultTime: '00:00'
         });
         $('#form\\:returnTime').timepicker({
           minuteStep: 5,
           showInputs: false,
-          disableFocus: true
+          disableFocus: true,
+          showMeridian: false,
+          defaultTime: '00:00'
         });
       });
     </script>
 
-    <!-- Bootstrap Datetimepicker Docu: http://www.malot.fr/bootstrap-datetimepicker/demo.php -->
-<!--     <link href="../webjars/bootstrap-datetimepicker/6aa746736d/css/datetimepicker.css" rel="stylesheet" media="screen" /> -->
-    <!--script type="text/javascript" src="../webjars/bootstrap-datetimepicker/6aa746736d/js/bootstrap-datetimepicker.js" charset="UTF-8" / -->
-<!--     <script type="text/javascript"> -->
-<!--        var datePattern = "dd-mm-yyyy hh:ii"; // 'ii' is the same like 'mm' but 'mm' does not work correctly -->
-<!--        Date.prototype.addDays = function(days) { -->
-<!--          this.setDate(this.getDate() + days); -->
-<!--          return this; -->
-<!--        }; -->
-
-<!--        // use this method to hours and minutes on the now date to '00'  -->
-<!--        $.date = function(dateObject) { -->
-<!--          var date = new Date(dateObject); -->
-<!--          var day = date.getDate(); -->
-<!--          // JavaScript months are 0-11 -->
-<!--          var month = date.getMonth() + 1; -->
-<!--          var year = date.getFullYear(); -->
-<!--          if (day &#60; 10) { -->
-<!--            day = "0" + day; -->
-<!--          }; -->
-<!--          if (month &#60; 10) { -->
-<!--              month = "0" + month; -->
-<!--          }; -->
-<!--          return day + "-" + month + "-" + year + " 00:00"; -->
-<!--        }; -->
-
-<!--        $(function() { -->
-<!--          $('#form\\:startDate').datetimepicker({ -->
-<!--            format: datePattern, -->
-<!--            startDate: $.date(new Date().addDays(7)), -->
-<!--            autoclose: true, -->
-<!--          }); -->
-<!--          $('#form\\:returnDate').datetimepicker({ -->
-<!--            format: datePattern, -->
-<!--            startDate: $.date(new Date().addDays(7)), -->
-<!--            autoclose: true, -->
-<!--          }); -->
-<!--        }); -->
-<!--     </script> -->
 </h:head>
 
 <h:body>
-<!--   <div class="navbar navbar-fixed-top"> -->
-<!--     <div class="navbar-inner"> -->
-<!--       <div class="container"> -->
-<!--         <a class="brand" href="#">camunda BPM</a> -->
-<!--       </div> -->
-<!--     </div> -->
-<!--   </div> -->
-
   <h:panelGroup id="page" layout="block" styleClass="container">
-<!--     <hr /> -->
+    <div class="login">
+      <i class="icon-user"></i>
+      ${travelApplicationController.getUser()}
+    </div>
+    <hr />
     <h:panelGroup id="container" layout="block">
       <h:panelGroup>
         <h:panelGroup id="content" layout="block">

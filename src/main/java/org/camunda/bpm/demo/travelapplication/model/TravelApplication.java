@@ -38,19 +38,29 @@ public class TravelApplication implements Serializable {
   protected String destination;
 
   /**
-   * Abreisetag und ggf. gewünschte Uhrzeit
+   * Abreisetag
    */
   protected Date startDate;
 
   /**
-   * Rückreisetag und ggf. gewünschte Uhrzeit
+   * Abreisezeit
+   */
+  protected Date startTime;
+
+  /**
+   * Rückreisetag
    */
   protected Date returnDate;
 
   /**
+   * Rückreisezeit
+   */
+  protected Date returnTime;
+
+  /**
    * geschätzte Reisekosten
    */
-  protected Double costs;
+  protected double costs;
 
   /**
    * bevorzugte Verkehrsmittel
@@ -122,6 +132,14 @@ public class TravelApplication implements Serializable {
     this.startDate = startDate;
   }
 
+  public Date getStartTime() {
+    return startTime;
+  }
+
+  public void setStartTime(Date startTime) {
+    this.startTime = startTime;
+  }
+
   public Date getReturnDate() {
     return returnDate;
   }
@@ -130,11 +148,19 @@ public class TravelApplication implements Serializable {
     this.returnDate = returnDate;
   }
 
-  public Double getCosts() {
+  public Date getReturnTime() {
+    return returnTime;
+  }
+
+  public void setReturnTime(Date returnTime) {
+    this.returnTime = returnTime;
+  }
+
+  public double getCosts() {
     return costs;
   }
 
-  public void setCosts(Double costs) {
+  public void setCosts(double costs) {
     this.costs = costs;
   }
 

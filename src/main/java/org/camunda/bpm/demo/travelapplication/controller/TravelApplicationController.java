@@ -53,7 +53,25 @@ public class TravelApplicationController implements Serializable {
   public void startProcess(String processDefinitionKey, String callbackUrl) throws IOException {
     // set the process variable
     HashMap<String, Object> variables = new HashMap<String, Object>();
-    variables.put("travelApplication", travelApplication);
+    variables.put("firstName", travelApplication.getFirstName());
+    variables.put("lastName", travelApplication.getLastName());
+    variables.put("department", travelApplication.getDepartment());
+    variables.put("projectNumber", travelApplication.getProjectNumber());
+    variables.put("department", travelApplication.getDepartment());
+    variables.put("destination", travelApplication.getDestination());
+    variables.put("reason", travelApplication.getReason());
+    variables.put("costs", travelApplication.getCosts());
+    variables.put("startDate", travelApplication.getStartDate());
+    variables.put("startTime", travelApplication.getStartTime());
+    variables.put("returnDate", travelApplication.getReturnDate());
+    variables.put("returnTime", travelApplication.getReturnTime());
+    variables.put("preferredAccommodation", travelApplication.getPreferredAccommodation());
+    variables.put("preferredTransportationMeans", travelApplication.getPreferredTransportationMeans());
+
+    if (userId == null) {
+      getUser();
+    }
+    variables.put("userId", userId);
 
     runtimeService.startProcessInstanceByKey(processDefinitionKey, variables);
 
@@ -84,36 +102,34 @@ public class TravelApplicationController implements Serializable {
     List<Group> departmentList = identityService.createGroupQuery().groupMember(user.getId()).list();
     if (departmentList != null && !departmentList.isEmpty()) {
       for (Group group : departmentList) {
-        if ((group.getId().contains("Mitarbeiter") && group.getId().contains("_")) || (!group.getId().contains("_"))) {
-          travelApplication.setDepartment(group.getId());
+        if ((group.getId().contains("Mitarbeiter") && group.getId().contains("_")) || (group.getId().equals("Geschaeftsfuehrer")) || (group.getId().equals("Sekretaer"))) {
+          travelApplication.setDepartment(group.getName());
         }
       }
     }
     return travelApplication;
   }
 
-  public String getProjectLeader() {
-    Project project = travelApplicationBean.findById(Project.class, travelApplication.getProjectNumber());
+  public String getProjectLeader(Long projectNumber) {
+    Project project = travelApplicationBean.findById(Project.class, projectNumber);
     String[] names = project.getProjectLeader().split(" ");
     User projectLeader = identityService.createUserQuery().userFirstName(names[0]).userLastName(names[1]).singleResult();
     return projectLeader.getId();
   }
 
-  public List<String> getDepartmentLeader() {
-    if (userId == null) {
-      getUser();
-    }
+  public String getDepartmentLeader(String userId) {
+    String departmentLeaders = "";
     List<String> candidateGroupList = new ArrayList<String>();
     List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
     if (groupList != null && !groupList.isEmpty()) {
       for (Group group : groupList) {
-        if (group.getId().contains("_") && !group.getId().contains("IT")) {
+        if (group.getId().contains("_Mitarbeiter") && !group.getId().contains("IT")) {
           String groupId = group.getId().replace("Mitarbeiter", "Abteilungsleiter");
           candidateGroupList.add(groupId);
           groupId = group.getId().replace("Mitarbeiter", "Stellvertreter");
           candidateGroupList.add(groupId);
         }
-        if (group.getId().contains("_") && group.getId().contains("IT")) {
+        if (group.getId().contains("_Mitarbeiter") && group.getId().contains("IT")) {
           String groupId = group.getId().replace("Mitarbeiter", "Abteilungsleiter");
           candidateGroupList.add(groupId);
         }
@@ -123,7 +139,15 @@ public class TravelApplicationController implements Serializable {
         }
       }
     }
-    return candidateGroupList;
+    if (candidateGroupList != null && !candidateGroupList.isEmpty()) {
+      for (String groupId : candidateGroupList) {
+        if (departmentLeaders != null && !departmentLeaders.isEmpty()) {
+          departmentLeaders = departmentLeaders + ", ";
+        }
+        departmentLeaders = departmentLeaders + groupId;
+      }
+    }
+    return departmentLeaders;
   }
 
   public String getUser() {

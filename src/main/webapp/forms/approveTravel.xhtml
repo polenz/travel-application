@@ -15,99 +15,92 @@
     </f:metadata>
   </h:head>
   <h:body>
-    <h2>Reise Genehmigung</h2>
+    <h1>Reise Genehmigung</h1>
     <h:form id="form">
-      <h:panelGrid columns="2">
+      <h:panelGrid columns="3">
        <h:outputLabel for="firstName" value="Vorname" />
-       <h:panelGroup>
-        <h:inputText id="firstName" value="#{processVariables['travelApplication'].firstName}" required="true" requiredMessage="Bitte geben Sie Ihren Vornamen ein." />
-        <h:message for="firstName" style="color:red"/>
-       </h:panelGroup>
+       <h:inputText id="firstName" value="#{processVariables['firstName']}" required="true" requiredMessage="Bitte geben Sie Ihren Vornamen ein." />
+       <h:message for="firstName" style="color:red"/>
 
        <h:outputLabel for="lastName" value="Nachname" />
-       <h:panelGroup>
-        <h:inputText id="lastName" value="#{processVariables['travelApplication'].lastName}" required="true" requiredMessage="Bitte geben Sie Ihren Nachnamen ein." />
-        <h:message for="lastName" style="color:red"/>
-       </h:panelGroup>
+       <h:inputText id="lastName" value="#{processVariables['lastName']}" required="true" requiredMessage="Bitte geben Sie Ihren Nachnamen ein." />
+       <h:message for="lastName" style="color:red"/>
 
        <h:outputLabel for="department" value="Abteilung" />
-       <h:panelGroup>
-        <h:inputText id="department" value="#{processVariables['travelApplication'].department}" required="true" requiredMessage="Bitte geben Sie Ihre Abteilung ein." />
-        <h:message for="department" style="color:red"/>
-       </h:panelGroup>
+       <h:inputText id="department" value="#{processVariables['department']}" required="true" requiredMessage="Bitte geben Sie Ihre Abteilung ein." />
+       <h:message for="department" style="color:red"/>
 
        <h:outputLabel for="projectNumber" value="Projekt-Nr" />
-       <h:panelGroup>
-        <h:selectOneMenu id="projectNumber" value="#{processVariables['travelApplication'].projectNumber}" required="true" requiredMessage="Bitte w&#228;hlen Sie ein Projekt aus.">
-         <f:selectItems value="#{travelApplicationController.getProjectList()}" var="p" itemLabel="#{p.number}" itemValue="#{p.number}" />
-        </h:selectOneMenu>
-        <h:message for="projectNumber" style="color:red"/>
-       </h:panelGroup>
+       <h:selectOneMenu id="projectNumber" value="#{processVariables['projectNumber']}" required="true" requiredMessage="Bitte w&#228;hlen Sie ein Projekt aus.">
+        <f:selectItems value="#{travelApplicationController.getProjectList()}" var="p" itemLabel="#{p.number}" itemValue="#{p.number}" />
+       </h:selectOneMenu>
+       <h:message for="projectNumber" style="color:red"/>
 
        <h:outputLabel for="reason" value="Zweck der Reise" />
-       <h:panelGroup>
-        <h:inputText id="reason" value="#{processVariables['travelApplication'].reason}" required="true" requiredMessage="Bitte geben Sie den Zweck der Reise ein." />
-        <h:message for="reason" style="color:red"/>
-       </h:panelGroup>
+       <h:inputText id="reason" value="#{processVariables['reason']}" required="true" requiredMessage="Bitte geben Sie den Zweck der Reise ein." />
+       <h:message for="reason" style="color:red"/>
 
        <h:outputLabel for="destination" value="Ziel der Reise" />
-       <h:panelGroup>
-        <h:inputText id="destination" value="#{processVariables['travelApplication'].destination}" required="true" requiredMessage="Bitte geben Sie das Ziel der Reise ein." />
-        <h:message for="destination" style="color:red"/>
-       </h:panelGroup>
+       <h:inputText id="destination" value="#{processVariables['destination']}" required="true" requiredMessage="Bitte geben Sie das Ziel der Reise ein." />
+       <h:message for="destination" style="color:red"/>
 
        <h:outputLabel for="startDate" value="Abreisetag (ggf. inkl. Uhrzeit)" />
        <h:panelGroup>
-        <h:inputText id="startDate" value="#{processVariables['travelApplication'].startDate}" required="true" requiredMessage="Bitte geben Sie das Abreisedatum ein." >
+        <h:inputText id="startDate" value="#{processVariables['startDate']}" required="true" requiredMessage="Bitte geben Sie das Abreisedatum ein." >
            <f:convertDateTime pattern="dd-MM-yyyy" />
         </h:inputText>
         <h:message for="startDate" style="color:red"/>
 
         <div class="bootstrap-timepicker pull-right">
-          <h:inputText id="startTime" value="#{processVariables['travelApplication'].startDate}">
+          <h:inputText id="startTime" value="#{processVariables['startTime']}">
             <f:convertDateTime pattern="HH:mm" />
           </h:inputText>
         </div>
-        <h:message for="startTime" style="color:red"/>
        </h:panelGroup>
+       <h:message for="startTime" style="color:red"/>
 
        <h:outputLabel for="returnDate" value="R&#252;ckreisetag (ggf. inkl. Uhrzeit)" />
        <h:panelGroup>
-          <h:inputText id="returnDate" value="#{processVariables['travelApplication'].returnDate}" required="true" requiredMessage="Bitte geben Sie das R&#252;ckreisedatum ein." >
-            <f:convertDateTime pattern="dd-MM-yyyy" />
-          </h:inputText>
-        <h:message for="returnDate" style="color:red"/>
+        <h:inputText id="returnDate" value="#{processVariables['returnDate']}" required="true" requiredMessage="Bitte geben Sie das R&#252;ckreisedatum ein." >
+          <f:convertDateTime pattern="dd-MM-yyyy" />
+        </h:inputText>
 
         <div class="bootstrap-timepicker pull-right">
-          <h:inputText id="returnTime" value="#{processVariables['travelApplication'].returnDate}">
+          <h:inputText id="returnTime" value="#{processVariables['returnTime']}">
             <f:convertDateTime pattern="HH:mm" />
           </h:inputText>
         </div>
         <h:message for="returnTime" style="color:red"/>
        </h:panelGroup>
+       <h:message for="returnDate" style="color:red"/>
 
        <h:outputLabel for="costs" value="Gesch&#228;tzte Reisekosten" />
-       <h:panelGroup>
-        <h:inputText id="costs" value="#{processVariables['travelApplication'].costs}" required="true" requiredMessage="Bitte geben Sie die gesch&#228;tzten Reisekosten ein." >
-         <f:convertNumber />
-        </h:inputText>
-        <h:message for="costs" style="color:red"/>
-       </h:panelGroup>
+       <h:inputText id="costs" value="#{processVariables['costs']}" required="true" requiredMessage="Bitte geben Sie die gesch&#228;tzten Reisekosten ein." >
+        <f:convertNumber />
+       </h:inputText>
+       <h:message for="costs" style="color:red"/>
 
        <h:outputLabel for="preferredTransportationMeans" value="Bevorzugte Verkehrsmittel" />
-       <h:panelGroup>
-        <h:inputText id="preferredTransportationMeans" value="#{processVariables['travelApplication'].preferredTransportationMeans}" />
-        <h:message for="preferredTransportationMeans" style="color:red"/>
-       </h:panelGroup>
+       <h:inputText id="preferredTransportationMeans" value="#{processVariables['preferredTransportationMeans']}" />
+       <h:message for="preferredTransportationMeans" style="color:red"/>
 
        <h:outputLabel for="preferredAccommodation" value="Bevorzugte Unterkunft" />
-       <h:panelGroup>
-        <h:inputText id="preferredAccommodation" value="#{processVariables['travelApplication'].preferredAccommodation}" />
-        <h:message for="preferredAccommodation" style="color:red"/>
-       </h:panelGroup>
+       <h:inputText id="preferredAccommodation" value="#{processVariables['preferredAccommodation']}" />
+       <h:message for="preferredAccommodation" style="color:red"/>
       </h:panelGrid>
 
-     <h:commandButton id="submit_button" value="Weiter" action="#{travelApplicationForm.completeTask()}" />
+      <br />
+
+      <h:outputLabel for="approvedBudget" value="Budget genehmigt" class="checkbox">
+        <h:selectBooleanCheckbox id="approvedBudget" value="#{processVariables['approvedBudget']}" disabled="true" />
+      </h:outputLabel>
+      <h:outputLabel for="approvedTravel" value="Reise genehmigen" class="checkbox">
+        <h:selectBooleanCheckbox id="approvedTravel" value="#{processVariables['approvedTravel']}" />
+      </h:outputLabel>
+
+      <br />
+
+     <h:commandButton id="submit_button" value="Weiter" action="#{travelApplicationForm.completeTask()}" class="btn"/>
     </h:form>
   </h:body>
 
