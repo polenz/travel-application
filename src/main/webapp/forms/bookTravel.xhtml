@@ -18,27 +18,27 @@
     <h2>Buchung</h2>
     <h:form id="form">
      <h:panelGrid columns="2">
-      <h:outputLabel for="firstName" value="Vorname" />
+      <h:outputLabel for="firstName" value="Vorname*" />
       <h:inputText id="firstName" value="#{processVariables['firstName']}" disabled="true" />
 
-      <h:outputLabel for="lastName" value="Nachname" />
+      <h:outputLabel for="lastName" value="Nachname*" />
       <h:inputText id="lastName" value="#{processVariables['lastName']}" disabled="true" />
 
       <h:outputLabel for="department" value="Abteilung" />
       <h:inputText id="department" value="#{processVariables['department']}" disabled="true" />
 
-      <h:outputLabel for="projectNumber" value="Projekt-Nr" />
+      <h:outputLabel for="projectNumber" value="Projekt-Nr*" />
       <h:selectOneMenu id="projectNumber" value="#{processVariables['projectNumber']}" disabled="true">
        <f:selectItems value="#{travelApplicationController.getProjectList()}" var="p" itemLabel="#{p.number}" itemValue="#{p.number}" />
       </h:selectOneMenu>
 
-      <h:outputLabel for="reason" value="Zweck der Reise" />
+      <h:outputLabel for="reason" value="Zweck der Reise*" />
       <h:inputText id="reason" value="#{processVariables['reason']}" disabled="true" />
 
-      <h:outputLabel for="destination" value="Ziel der Reise" />
+      <h:outputLabel for="destination" value="Ziel der Reise*" />
       <h:inputText id="destination" value="#{processVariables['destination']}" disabled="true" />
 
-      <h:outputLabel for="startDate" value="Abreisetag (ggf. inkl. Uhrzeit)" />
+      <h:outputLabel for="startDate" value="Abreisetag* (ggf. inkl. Uhrzeit)" />
       <h:panelGroup>
 	      <h:inputText id="startDate" value="#{processVariables['startDate']}" disabled="true" >
 	         <f:convertDateTime pattern="dd-MM-yyyy" />
@@ -51,7 +51,7 @@
 	      </div>
       </h:panelGroup>
 
-      <h:outputLabel for="returnDate" value="R&#252;ckreisetag (ggf. inkl. Uhrzeit)" />
+      <h:outputLabel for="returnDate" value="R&#252;ckreisetag* (ggf. inkl. Uhrzeit)" />
       <h:panelGroup>
 	      <h:inputText id="returnDate" value="#{processVariables['returnDate']}" disabled="true" >
 	        <f:convertDateTime pattern="dd-MM-yyyy" />
@@ -64,8 +64,10 @@
 	      </div>
 	    </h:panelGroup>
 
-      <h:outputLabel for="costs" value="Gesch&#228;tzte Reisekosten" />
-      <h:inputText id="costs" value="#{processVariables['costs']}" disabled="true" />
+      <h:outputLabel for="costs" value="Gesch&#228;tzte Reisekosten*" />
+      <h:inputText id="costs" value="#{processVariables['costs']}" disabled="true" >
+        <f:convertNumber groupingUsed="false"/>
+      </h:inputText>
 
       <h:outputLabel for="preferredTransportationMeans" value="Bevorzugte Verkehrsmittel" />
       <h:inputText id="preferredTransportationMeans" value="#{processVariables['preferredTransportationMeans']}" disabled="true" />

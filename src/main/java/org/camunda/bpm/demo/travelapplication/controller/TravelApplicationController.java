@@ -113,7 +113,10 @@ public class TravelApplicationController implements Serializable {
     Project project = travelApplicationBean.findById(Project.class, projectNumber);
     String[] names = project.getProjectLeader().split(" ");
     User projectLeader = identityService.createUserQuery().userFirstName(names[0]).userLastName(names[1]).singleResult();
-    return projectLeader.getId();
+    if (projectLeader != null) {
+      return projectLeader.getId();
+    }
+    return null;
   }
 
   public String getDepartmentLeader(String userId) {
