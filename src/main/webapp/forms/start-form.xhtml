@@ -55,7 +55,7 @@
 
         <div class="bootstrap-timepicker pull-right">
 	        <h:inputText id="startTime" value="#{travelApplicationController.travelApplication.startTime}">
-	          <f:convertDateTime pattern="hh:mm" />
+	          <f:convertDateTime pattern="HH:mm" />
 	        </h:inputText>
         </div>
        <h:message for="startTime" style="color:red"/>
@@ -70,7 +70,7 @@
 
         <div class="bootstrap-timepicker pull-right">
 		      <h:inputText id="returnTime" value="#{travelApplicationController.travelApplication.returnTime}">
-	          <f:convertDateTime pattern="hh:mm" />
+	          <f:convertDateTime pattern="HH:mm" />
 	        </h:inputText>
 	      </div>
        <h:message for="returnTime" style="color:red"/>
