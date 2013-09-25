@@ -24,7 +24,7 @@
       <h:outputLabel for="lastName" value="Nachname*" />
       <h:inputText id="lastName" value="#{processVariables['lastName']}" disabled="true" />
 
-      <h:outputLabel for="department" value="Abteilung" />
+      <h:outputLabel for="department" value="Abteilung*" />
       <h:inputText id="department" value="#{processVariables['department']}" disabled="true" />
 
       <h:outputLabel for="projectNumber" value="Projekt-Nr*" />
@@ -45,7 +45,7 @@
 	      </h:inputText>
 	
 	      <div class="bootstrap-timepicker pull-right">
-	        <h:inputText id="startTime" value="#{processVariables['startTime']}" disabled="true">
+	        <h:inputText id="startTime" value="#{processVariables['startTime']}" disabled="true" style="width:40px; margin-left:3px">
 	          <f:convertDateTime pattern="HH:mm" />
 	        </h:inputText>
 	      </div>
@@ -58,7 +58,7 @@
 	      </h:inputText>
 	
 	      <div class="bootstrap-timepicker pull-right">
-	        <h:inputText id="returnTime" value="#{processVariables['returnTime']}" disabled="true">
+	        <h:inputText id="returnTime" value="#{processVariables['returnTime']}" disabled="true" style="width:40px; margin-left:3px">
 	          <f:convertDateTime pattern="HH:mm" />
 	        </h:inputText>
 	      </div>
@@ -66,7 +66,7 @@
 
       <h:outputLabel for="costs" value="Gesch&#228;tzte Reisekosten*" />
       <h:inputText id="costs" value="#{processVariables['costs']}" disabled="true" >
-        <f:convertNumber groupingUsed="false"/>
+        <f:convertNumber groupingUsed="false" pattern="0.00" />
       </h:inputText>
 
       <h:outputLabel for="preferredTransportationMeans" value="Bevorzugte Verkehrsmittel" />

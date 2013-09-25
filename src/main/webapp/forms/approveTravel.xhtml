@@ -52,7 +52,7 @@
         <h:message for="startDate" style="color:red"/>
 
         <div class="bootstrap-timepicker pull-right">
-          <h:inputText id="startTime" value="#{processVariables['startTime']}">
+          <h:inputText id="startTime" value="#{processVariables['startTime']}" style="width:40px; margin-left:3px">
             <f:convertDateTime pattern="HH:mm" />
           </h:inputText>
         </div>
@@ -66,7 +66,7 @@
         </h:inputText>
 
         <div class="bootstrap-timepicker pull-right">
-          <h:inputText id="returnTime" value="#{processVariables['returnTime']}">
+          <h:inputText id="returnTime" value="#{processVariables['returnTime']}" style="width:40px; margin-left:3px">
             <f:convertDateTime pattern="HH:mm" />
           </h:inputText>
         </div>
@@ -76,7 +76,7 @@
 
        <h:outputLabel for="costs" value="Gesch&#228;tzte Reisekosten*" />
        <h:inputText id="costs" value="#{processVariables['costs']}" required="true" requiredMessage="Bitte geben Sie die Reisekosten ein." >
-        <f:convertNumber groupingUsed="false" />
+        <f:convertNumber groupingUsed="false" pattern="0.00" />
        </h:inputText>
        <h:message for="costs" style="color:red"/>
 
