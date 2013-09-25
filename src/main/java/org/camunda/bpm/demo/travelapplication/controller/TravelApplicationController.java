@@ -101,7 +101,8 @@ public class TravelApplicationController implements Serializable {
     List<Group> departmentList = identityService.createGroupQuery().groupMember(user.getId()).list();
     if (departmentList != null && !departmentList.isEmpty()) {
       for (Group group : departmentList) {
-        if ((group.getId().contains("Mitarbeiter") && group.getId().contains("_")) || (group.getId().equals("Geschaeftsfuehrer")) || (group.getId().equals("Sekretaer"))) {
+        String groupId = group.getId();
+		if ((groupId.contains("Mitarbeiter") && groupId.contains("_")) || (groupId.equals("Geschaeftsfuehrer")) || (groupId.equals("Sekretaer"))) {
           travelApplication.setDepartment(group.getName());
         }
       }
