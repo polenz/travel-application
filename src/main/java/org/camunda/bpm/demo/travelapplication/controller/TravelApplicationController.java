@@ -91,6 +91,7 @@ public class TravelApplicationController implements Serializable {
     travelApplication = new TravelApplication();
   }
 
+  // TODO @Produces @Named + shorten references in start-form.xhtml
   public TravelApplication getTravelApplication() {
     if (userId == null) {
       getUser();
