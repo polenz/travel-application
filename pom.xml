@@ -194,7 +194,8 @@
 			<version>1.8</version>
 			<executions>
 				<execution>
-					<id>add-source</id>
+					<!-- Adds generated sources to Maven test build path -->
+					<id>add-test-source</id>
 					<phase>generate-test-sources</phase>
 					<goals>
 						<goal>add-test-source</goal>
@@ -252,21 +253,6 @@
     			<configuration>
     				<lifecycleMappingMetadata>
     					<pluginExecutions>
-    						<pluginExecution>
-    						  <pluginExecutionFilter>
-    						    <groupId>org.codehaus.mojo</groupId>
-    						    <artifactId>
-    						      build-helper-maven-plugin
-    						    </artifactId>
-    						    <versionRange>[1.8,)</versionRange>
-    						    <goals>
-    						      <goal>add-test-source</goal>
-    						    </goals>
-    						  </pluginExecutionFilter>
-    						  <action>
-    						    <ignore></ignore>
-    						  </action>
-    						</pluginExecution>
     						<pluginExecution>
     						  <pluginExecutionFilter>
     						    <groupId>
