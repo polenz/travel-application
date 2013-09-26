@@ -32,7 +32,7 @@ import org.junit.runner.RunWith;
 public class ArquillianTest {
 
   private static final String PROCESS_DEFINITION_KEY = "travel-application";
-  private static final String WSDL_URL = "http://localhost:8080/travel-application/Calculate?wsdl";
+  private static final String WSDL_URL = "http://192.168.17.1:8080/travel-application-ws/Calculate?wsdl"; //"http://localhost:8080/travel-application/Calculate?wsdl";
   private static final String HTTP_SERVICE_URL = "http://localhost:8080/travel-application/sum?value1=1&value2=1&value3=1";
 
   private CalculateService calculateService;
@@ -63,6 +63,7 @@ public class ArquillianTest {
             // add process image for visualizations
             .addAsResource("Dienstreiseprozess.png")
             // now you can add additional stuff required for your test case
+            .addAsLibraries(resolver.artifact("org.apache.commons:commons-email").resolveAsFiles())
     ;
   }
 
@@ -156,4 +157,10 @@ public class ArquillianTest {
     double sum = calculatePort.sum(1, 1, 1);
     assertEquals(new Double(3), (Double)sum);
   }
+  
+  @Test
+  public void testMailServer() throws Exception {
+	  new EmailDelegate().execute(null);
+  }
+
 }
