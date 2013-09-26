@@ -1,0 +1,603 @@
+version: 1
+
+dn: o=camunda,c=org
+objectClass: organization
+objectClass: top
+o: camunda
+description: Tree root
+l: Berlin
+
+dn: cn=admin,o=camunda,c=org
+objectClass: person
+objectClass: top
+cn: admin
+sn: admin
+description: LDAP Administrator
+userPassword:: e1NTSEF9ZHoxVGFDblNpc29vR1FDRndEcDVQaEdNUDcvN2RIM3o=
+
+dn: ou=Mitarbeiter,o=camunda,c=org
+objectClass: organizationalUnit
+objectClass: top
+ou: Mitarbeiter
+
+dn: ou=Geschaeftsleitung,ou=Mitarbeiter,o=camunda,c=org
+objectClass: organizationalUnit
+objectClass: top
+ou: Geschaeftsleitung
+
+dn: uid=holger.weinbach,ou=Geschaeftsleitung,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Holger Weinbach
+gidNumber: 0
+homeDirectory: /home/holger.weinbach
+sn: Weinbach
+uid: holger.weinbach
+uidNumber: 39291
+displayName: Holger Weinbach
+givenName: Holger
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=peter.knaus,ou=Geschaeftsleitung,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Peter Knaus
+gidNumber: 0
+homeDirectory: /home/peter.knaus
+sn: Knaus
+uid: peter.knaus
+uidNumber: 18304
+displayName: Peter Knaus
+givenName: Peter
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: ou=IT,ou=Mitarbeiter,o=camunda,c=org
+objectClass: organizationalUnit
+objectClass: top
+ou: IT
+
+dn: ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+objectClass: organizationalUnit
+objectClass: top
+ou: Abteilung_2
+
+dn: ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+objectClass: organizationalUnit
+objectClass: top
+ou: Abteilung_1
+
+dn: ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+objectClass: organizationalUnit
+objectClass: top
+ou: Verwaltung
+
+dn: ou=Rollen,o=camunda,c=org
+objectClass: organizationalUnit
+objectClass: top
+ou: Rollen
+
+dn: ou=Abteilung_1,ou=Rollen,o=camunda,c=org
+objectClass: organizationalUnit
+objectClass: top
+ou: Abteilung_1
+
+dn: cn=Abteilung_1_Abteilungsleiter,ou=Abteilung_1,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Abteilung_1_Abteilungsleiter
+gidNumber: 29215
+memberUid: uid=marcus.mueller,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=Abteilung_1_Mitarbeiter,ou=Abteilung_1,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Abteilung_1_Mitarbeiter
+gidNumber: 64199
+memberUid: uid=achim.albert,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=andrea.gross,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=anne.maier,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=marcus.mueller,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=norman.schmitt,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=susanne.mehl,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+
+dn: ou=Abteilung_2,ou=Rollen,o=camunda,c=org
+objectClass: organizationalUnit
+objectClass: top
+ou: Abteilung_2
+
+dn: cn=Abteilung_2_Abteilungsleiter,ou=Abteilung_2,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Abteilung_2_Abteilungsleiter
+gidNumber: 55474
+memberUid: uid=dieter.bauer,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=Abteilung_2_Mitarbeiter,ou=Abteilung_2,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Abteilung_2_Mitarbeiter
+gidNumber: 27350
+memberUid: uid=andrea.frank,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=christian.klein,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=dieter.bauer,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=michael.wolf,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=ulla.schmidt,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=.schmitt,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=norman.schmitt,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+
+dn: ou=Verwaltung,ou=Rollen,o=camunda,c=org
+objectClass: organizationalUnit
+objectClass: top
+ou: Verwaltung
+
+dn: cn=Verwaltung_Abteilungsleiter,ou=Verwaltung,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Verwaltung_Abteilungsleiter
+gidNumber: 33306
+memberUid: uid=stefanie.ott,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=Verwaltung_Mitarbeiter,ou=Verwaltung,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Verwaltung_Mitarbeiter
+gidNumber: 50749
+memberUid: uid=anja.maurer,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=stefanie.ott,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=petra.schneider,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=klaus.held,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=axel.apfel,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+
+dn: ou=Geschaeftsfuehrung,ou=Rollen,o=camunda,c=org
+objectClass: organizationalUnit
+objectClass: top
+ou: Geschaeftsfuehrung
+
+dn: cn=Geschaeftsfuehrer,ou=Geschaeftsfuehrung,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Geschaeftsfuehrer
+gidNumber: 30495
+memberUid: uid=peter.knaus,ou=Geschaeftsleitung,ou=Mitarbeiter,o=camunda,c=o
+ rg
+
+dn: cn=Sekretaer,ou=Geschaeftsfuehrung,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Sekretaer
+gidNumber: 46893
+memberUid: uid=holger.weinbach,ou=Geschaeftsleitung,ou=Mitarbeiter,o=camunda
+ ,c=org
+
+dn: ou=IT,ou=Rollen,o=camunda,c=org
+objectClass: organizationalUnit
+objectClass: top
+ou: IT
+
+dn: cn=IT_Abteilungsleiter,ou=IT,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: IT_Abteilungsleiter
+gidNumber: 28388
+memberUid: uid=bertram.heintz,ou=IT,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=IT_Mitarbeiter,ou=IT,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: IT_Mitarbeiter
+gidNumber: 14061
+memberUid: uid=bertram.heintz,ou=IT,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=volker.hauser,ou=IT,ou=Mitarbeiter,o=camunda,c=org
+
+dn: uid=stefanie.ott,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Stefanie Ott
+gidNumber: 0
+homeDirectory: /home/stefanie.ott
+sn: Ott
+uid: stefanie.ott
+uidNumber: 39291
+displayName: Stefanie Ott
+givenName: Stefanie
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=petra.schneider,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Petra Schneider
+gidNumber: 0
+homeDirectory: /home/petra.schneider
+sn: Schneider
+uid: petra.schneider
+uidNumber: 39291
+displayName: Petra Schneider
+givenName: Petra
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=anja.maurer,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Anja Maurer
+gidNumber: 0
+homeDirectory: /home/anja.maurer
+sn: Maurer
+uid: anja.maurer
+uidNumber: 39291
+displayName: Anja Maurer
+givenName: Anja
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=klaus.held,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Klaus Held
+gidNumber: 0
+homeDirectory: /home/klaus.held
+sn: Held
+uid: klaus.held
+uidNumber: 39291
+displayName: Klaus Held
+givenName: Klaus
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=axel.apfel,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Axel Apfel
+gidNumber: 0
+homeDirectory: /home/axel.apfel
+sn: Apfel
+uid: axel.apfel
+uidNumber: 39291
+displayName: Axel Apfel
+givenName: Axel
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=bertram.heintz,ou=IT,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Bertram Heintz
+gidNumber: 0
+homeDirectory: /home/bertram.heintz
+sn: Heintz
+uid: bertram.heintz
+uidNumber: 39291
+displayName: Bertram Heintz
+givenName: Bertram
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=volker.hauser,ou=IT,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Volker Hauser
+gidNumber: 0
+homeDirectory: /home/volker.hauser
+sn: Hauser
+uid: volker.hauser
+uidNumber: 39291
+displayName: Volker Hauser
+givenName: Volker
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=michael.wolf,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Michael Wolf
+gidNumber: 0
+homeDirectory: /home/michael.wolf
+sn: Wolf
+uid: michael.wolf
+uidNumber: 39291
+displayName: Michael Wolf
+givenName: Michael
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=ulla.schmidt,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Ulla Schmidt
+gidNumber: 0
+homeDirectory: /home/ulla.schmidt
+sn: Schmidt
+uid: ulla.schmidt
+uidNumber: 39291
+displayName: Ulla Schmidt
+givenName: Ulla
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=dieter.bauer,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Dieter Bauer
+gidNumber: 0
+homeDirectory: /home/dieter.bauer
+sn: Bauer
+uid: dieter.bauer
+uidNumber: 39291
+displayName: Dieter Bauer
+givenName: Dieter
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=andrea.frank,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Andrea Frank
+gidNumber: 0
+homeDirectory: /home/andrea.frank
+sn: Frank
+uid: andrea.frank
+uidNumber: 39291
+displayName: Andrea Frank
+givenName: Andrea
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=christian.klein,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Christian Klein
+gidNumber: 0
+homeDirectory: /home/christian.klein
+sn: Klein
+uid: christian.klein
+uidNumber: 39291
+displayName: Christian Klein
+givenName: Christian
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=marcus.mueller,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn:: TWFyY3VzIE3DvGxsZXI=
+gidNumber: 0
+homeDirectory: /home/marcus.mueller
+sn:: TcO8bGxlcg==
+uid: marcus.mueller
+uidNumber: 39291
+displayName:: TWFyY3VzIE3DvGxsZXI=
+givenName: Marcus
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=susanne.mehl,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Susanne Mehl
+gidNumber: 0
+homeDirectory: /home/susanne.mehl
+sn: Mehl
+uid: susanne.mehl
+uidNumber: 39291
+displayName: Susanne Mehl
+givenName: Susanne
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=anne.maier,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Anne Maier
+gidNumber: 0
+homeDirectory: /home/anne.maier
+sn: Maier
+uid: anne.maier
+uidNumber: 39291
+displayName: Anne Maier
+givenName: Anne
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=norman.schmitt,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Norman Schmitt
+gidNumber: 0
+homeDirectory: /home/norman.schmitt
+sn: Schmitt
+uid: norman.schmitt
+uidNumber: 39291
+displayName: Norman Schmitt
+givenName: Norman
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=andrea.gross,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn:: QW5kcmVhIEdyb8Of
+gidNumber: 0
+homeDirectory: /home/andrea.gross
+sn:: R3Jvw58=
+uid: andrea.gross
+uidNumber: 39291
+displayName:: QW5kcmVhIEdyb8Of
+givenName: Andrea
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: uid=achim.albert,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: posixAccount
+cn: Achim Albert
+gidNumber: 0
+homeDirectory: /home/achim.albert
+sn: Albert
+uid: achim.albert
+uidNumber: 39291
+displayName: Achim Albert
+givenName: Achim
+loginShell: /bin/false
+mail: test@camunda-t61.local
+userPassword:: e1NIQX14VTNwTzlOWTBYRkxvQmRwb3BnaHRVdWdqQ2c9
+
+dn: ou=BPM-Rollen,ou=Rollen,o=camunda,c=org
+objectClass: organizationalUnit
+objectClass: top
+ou: BPM-Rollen
+
+dn: cn=Prozesscontroller,ou=BPM-Rollen,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Prozesscontroller
+gidNumber: 64199
+description:: VmVyYW50d29ydGxpY2ggZsO8ciBkaWUgS29udHJvbGxlIHZvbiBBdWZnYWJlbi
+ 0gdW5kIFByb3plc3NpbnN0YW56ZW4sIHNvd2llIEtvbnRyb2xsZSB2b24gUHJvemVzc2tlbm56Y
+ WhsZW4gdW5kIGRlciBFaW5oYWx0dW5nIHZvbiBHZXNjaMOkZnRzcmVnZWxu
+memberUid: uid=holger.weinbach,ou=Geschaeftsleitung,ou=Mitarbeiter,o=camunda
+ ,c=org
+
+dn: cn=Prozessmanager,ou=BPM-Rollen,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Prozessmanager
+gidNumber: 64199
+description:: VmVyYW50d29ydGxpY2ggZsO8ciBkaWUgU2ljaGVyc3RlbGx1bmcgZGVzIFByb3
+ plc3NhYmxhdWZzIHVuZCBkZXIgR2VzY2jDpGZ0c3JlZ2VsbiBhdWNoIGluIG5pY2h0IGFiZ2Via
+ WxkZXRlbiBBdXNuYWhtZWbDpGxsZW4=
+memberUid: uid=achim.albert,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=Prozessmodellierer,ou=BPM-Rollen,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Prozessmodellierer
+gidNumber: 64199
+description:: VmVyYW50d29ydGxpY2ggZsO8ciBkaWUgZmFjaGxpY2hlIE1vZGVsbGllcnVuZy
+ B1bmQgRG9rdW1lbnRhdGlvbiwgc293aWUgdGVjaG5pc2NoZSBVbXNldHp1bmcgdm9uIFByb3plc
+ 3Nlbg==
+memberUid: uid=axel.apfel,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=Prozessentwickler,ou=BPM-Rollen,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Prozessentwickler
+gidNumber: 64199
+description:: VmVyYW50d29ydGxpY2ggZsO8ciBkaWUgZmFjaGxpY2hlIE1vZGVsbGllcnVuZy
+ B1bmQgRG9rdW1lbnRhdGlvbiwgc293aWUgdGVjaG5pc2NoZSBVbXNldHp1bmcgdm9uIFByb3plc
+ 3Nlbg==
+memberUid: uid=axel.apfel,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=Systemadministrator,ou=BPM-Rollen,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Systemadministrator
+gidNumber: 64199
+description:: VmVyYW50d29ydGxpY2ggZsO8ciBkaWUgdGVjaG5pc2NoZSBCZXRyZXV1bmcgdW
+ 5kIEtvbmZpZ3VyYXRpb24gYWxsZXIgU3lzdGVtZQ==
+memberUid: uid=bertram.heintz,ou=IT,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=Prozessadministrator,ou=BPM-Rollen,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Prozessadministrator
+gidNumber: 64199
+description:: VmVyYW50d29ydGxpY2ggZsO8ciBkaWUgRnJlaWdhYmUgdm9uIFByb3plc3N2ZX
+ JzaW9uZW4gdW5kIE51dHplcnZlcndhbHR1bmc=
+memberUid: uid=volker.hauser,ou=IT,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=Reisesachbearbeiter,ou=Verwaltung,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Reisesachbearbeiter
+gidNumber: 42618
+memberUid: uid=anja.maurer,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=petra.schneider,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=Personal,ou=Verwaltung,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Personal
+gidNumber: 36018
+memberUid: uid=klaus.held,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=Buchhaltung,ou=Verwaltung,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Buchhaltung
+gidNumber: 36264
+memberUid: uid=klaus.held,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=Abteilung_1_Stellvertreter,ou=Abteilung_1,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Abteilung_1_Stellvertreter
+gidNumber: 21064
+memberUid: uid=michael.wolf,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=Abteilung_2_Stellvertreter,ou=Abteilung_2,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Abteilung_2_Stellvertreter
+gidNumber: 5038
+memberUid: uid=marcus.mueller,ou=Abteilung_1,ou=Mitarbeiter,o=camunda,c=org
+memberUid: uid=ulla.schmidt,ou=Abteilung_2,ou=Mitarbeiter,o=camunda,c=org
+
+dn: cn=Verwaltung_Stellvertreter,ou=Verwaltung,ou=Rollen,o=camunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Verwaltung_Stellvertreter
+gidNumber: 60832
+memberUid: uid=peter.knaus,ou=Geschaeftsleitung,ou=Mitarbeiter,o=camunda,c=o
+ rg
+
+dn: cn=Geschaeftsfuehrung_Stellvertreter,ou=Geschaeftsfuehrung,ou=Rollen,o=c
+ amunda,c=org
+objectClass: top
+objectClass: posixGroup
+cn: Geschaeftsfuehrung_Stellvertreter
+gidNumber: 49428
+memberUid: uid=stefanie.ott,ou=Verwaltung,ou=Mitarbeiter,o=camunda,c=org
+
