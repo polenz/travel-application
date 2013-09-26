@@ -8,35 +8,33 @@
     <laneSet id="sid-62a68af9-294c-44bf-94dc-bce36c6cc152">
       <lane id="sid-F1D3D4EB-C7A3-43D1-8C8A-7FCC4E1B9CDF" name="Projektleiter">
         <flowNodeRef>sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0</flowNodeRef>
-        <flowNodeRef>sid-43134180-FB6A-4ADE-B797-9C89156E43B5</flowNodeRef>
-        <flowNodeRef>sid-0925325B-FE23-482E-80F8-AB9D5F334415</flowNodeRef>
+        <flowNodeRef>ParallelGateway_1</flowNodeRef>
+        <flowNodeRef>BoundaryEvent_1</flowNodeRef>
         <flowNodeRef>sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2</flowNodeRef>
+        <flowNodeRef>sid-0925325B-FE23-482E-80F8-AB9D5F334415</flowNodeRef>
+        <flowNodeRef>sid-43134180-FB6A-4ADE-B797-9C89156E43B5</flowNodeRef>
+        <flowNodeRef>UserTask_3</flowNodeRef>
       </lane>
       <lane id="sid-34AAD29D-295D-4140-88A8-B61C17632640" name="Abteilungsleiter">
-        <flowNodeRef>sid-01FEA99D-72A7-4548-8E3F-21765C9EF7ED</flowNodeRef>
         <flowNodeRef>sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8</flowNodeRef>
+        <flowNodeRef>sid-01FEA99D-72A7-4548-8E3F-21765C9EF7ED</flowNodeRef>
         <flowNodeRef>sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40</flowNodeRef>
       </lane>
       <lane id="sid-E56E3297-DF1D-4A5C-8FF3-B07E08A5A6A5" name="Reisesachbearbeiter">
-        <flowNodeRef>sid-D0BE7B00-821F-455A-841A-96C716AB2082</flowNodeRef>
         <flowNodeRef>sid-8F08CF95-BB81-408C-94FA-549568E0CB64</flowNodeRef>
+        <flowNodeRef>ParallelGateway_2</flowNodeRef>
+        <flowNodeRef>EndEvent_1</flowNodeRef>
+        <flowNodeRef>UserTask_2</flowNodeRef>
+        <flowNodeRef>UserTask_1</flowNodeRef>
         <flowNodeRef>sid-BEEFD619-22CE-498B-9E01-B8251098CF5C</flowNodeRef>
+        <flowNodeRef>ServiceTask_2</flowNodeRef>
       </lane>
     </laneSet>
-    <startEvent id="sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0" activiti:formKey="app:forms/start-form.jsf">
-      <outgoing>SequenceFlow_1</outgoing>
-    </startEvent>
-    <dataStoreReference id="sid-8FFE24AF-64B5-4885-BE05-844124358B87" name="Datenbank" dataStoreRef="sid-50c457e9-43e2-4585-a2cb-080122169ac8"/>
-    <sequenceFlow id="SequenceFlow_1" name="" sourceRef="sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0" targetRef="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2"/>
-    <endEvent id="sid-01FEA99D-72A7-4548-8E3F-21765C9EF7ED" name="Dienstreise abgelehnt">
-      <incoming>sid-4CBCB96E-20DC-4B67-82B6-6971F57BA4F2</incoming>
-    </endEvent>
-    <endEvent id="sid-43134180-FB6A-4ADE-B797-9C89156E43B5" name="Dienstreise abgelehnt">
-      <incoming>sid-4A543851-7A9A-4990-84C7-E785A13A68C0</incoming>
-    </endEvent>
-    <endEvent id="sid-D0BE7B00-821F-455A-841A-96C716AB2082" name="Reise gebucht">
-      <incoming>sid-8DD9AEA7-E6A4-4079-B488-F4BBE0A44406</incoming>
-    </endEvent>
+    <userTask id="sid-8F08CF95-BB81-408C-94FA-549568E0CB64" activiti:formKey="app:forms/bookTravel.jsf" activiti:candidateGroups="Reisesachbearbeiter" name="Dienstreise&#xD;&#xA;buchen" implementation="webService">
+      <incoming>SequenceFlow_3</incoming>
+      <outgoing>sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC</outgoing>
+    </userTask>
+    <sequenceFlow id="sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC" sourceRef="sid-8F08CF95-BB81-408C-94FA-549568E0CB64" targetRef="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C"/>
     <exclusiveGateway id="sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8" name="Reise &#xD;&#xA;genehmigt?" gatewayDirection="Diverging">
       <incoming>sid-3A0AAC9E-226A-46D6-BA35-60EFA39B7FC7</incoming>
       <outgoing>sid-4CBCB96E-20DC-4B67-82B6-6971F57BA4F2</outgoing>
@@ -45,24 +43,71 @@
     <sequenceFlow id="sid-4CBCB96E-20DC-4B67-82B6-6971F57BA4F2" name="nein" sourceRef="sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8" targetRef="sid-01FEA99D-72A7-4548-8E3F-21765C9EF7ED">
       <conditionExpression xsi:type="tFormalExpression">#{!approvedTravel}</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="sid-4A3396E5-7F8A-4410-BB47-BB5DD4B6EDE1" name="ja" sourceRef="sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8" targetRef="sid-8F08CF95-BB81-408C-94FA-549568E0CB64">
+    <sequenceFlow id="sid-4A3396E5-7F8A-4410-BB47-BB5DD4B6EDE1" name="ja" sourceRef="sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8" targetRef="ParallelGateway_2">
       <conditionExpression xsi:type="tFormalExpression">#{approvedTravel}</conditionExpression>
     </sequenceFlow>
-    <userTask id="sid-8F08CF95-BB81-408C-94FA-549568E0CB64" activiti:formKey="app:forms/bookTravel.jsf" activiti:candidateGroups="Reisesachbearbeiter" name="Dienstreise&#xD;&#xA;buchen" implementation="webService">
+    <endEvent id="sid-01FEA99D-72A7-4548-8E3F-21765C9EF7ED" name="Dienstreise abgelehnt">
+      <incoming>sid-4CBCB96E-20DC-4B67-82B6-6971F57BA4F2</incoming>
+      <terminateEventDefinition id="TerminateEventDefinition_2"/>
+    </endEvent>
+    <parallelGateway id="ParallelGateway_2" name="Parallel Gateway">
       <incoming>sid-4A3396E5-7F8A-4410-BB47-BB5DD4B6EDE1</incoming>
-      <outgoing>sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC</outgoing>
+      <incoming>sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902</incoming>
+      <outgoing>SequenceFlow_3</outgoing>
+    </parallelGateway>
+    <sequenceFlow id="SequenceFlow_3" name="" sourceRef="ParallelGateway_2" targetRef="sid-8F08CF95-BB81-408C-94FA-549568E0CB64"/>
+    <endEvent id="EndEvent_1" name="End Event">
+      <incoming>SequenceFlow_7</incoming>
+    </endEvent>
+    <userTask id="UserTask_2" activiti:candidateGroups="Buchhaltung" activiti:formKey="app:forms/invoiceCosts.jsf" name="Reisekosten abrechnen">
+      <incoming>SequenceFlow_6</incoming>
+      <outgoing>SequenceFlow_7</outgoing>
     </userTask>
-    <sequenceFlow id="sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC" sourceRef="sid-8F08CF95-BB81-408C-94FA-549568E0CB64" targetRef="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C"/>
+    <sequenceFlow id="SequenceFlow_7" sourceRef="UserTask_2" targetRef="EndEvent_1"/>
+    <userTask id="UserTask_1" activiti:assignee="#{userId}" activiti:formKey="app:forms/addDocuments.jsf" name="Reisebelege einreichen">
+      <incoming>SequenceFlow_10</incoming>
+      <outgoing>SequenceFlow_6</outgoing>
+    </userTask>
+    <sequenceFlow id="SequenceFlow_6" sourceRef="UserTask_1" targetRef="UserTask_2"/>
     <serviceTask id="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C" activiti:expression="${travelApplicationBean.saveAbsence(firstName, lastName, startDate, returnDate, startTime, returnTime, projectNumber)}" name="Abwesenheit des MA in Datenbank buchen" implementation="webService">
       <incoming>sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC</incoming>
-      <outgoing>sid-8DD9AEA7-E6A4-4079-B488-F4BBE0A44406</outgoing>
+      <outgoing>SequenceFlow_5</outgoing>
     </serviceTask>
-    <sequenceFlow id="sid-8DD9AEA7-E6A4-4079-B488-F4BBE0A44406" sourceRef="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C" targetRef="sid-D0BE7B00-821F-455A-841A-96C716AB2082"/>
+    <sequenceFlow id="SequenceFlow_5" sourceRef="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C" targetRef="ServiceTask_2"/>
+    <serviceTask id="ServiceTask_2" activiti:class="org.camunda.bpm.demo.travelapplication.EmailDelegate" name="Antragsteller benachrichtigen">
+      <incoming>SequenceFlow_5</incoming>
+      <outgoing>SequenceFlow_10</outgoing>
+    </serviceTask>
+    <sequenceFlow id="SequenceFlow_10" name="" sourceRef="ServiceTask_2" targetRef="UserTask_1"/>
     <userTask id="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40" activiti:formKey="app:forms/approveTravel.jsf" activiti:candidateGroups="#{travelApplicationController.getDepartmentLeader(userId)}" name="Reise genehmigen" implementation="webService">
-      <incoming>sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902</incoming>
+      <incoming>SequenceFlow_4</incoming>
       <outgoing>sid-3A0AAC9E-226A-46D6-BA35-60EFA39B7FC7</outgoing>
     </userTask>
     <sequenceFlow id="sid-3A0AAC9E-226A-46D6-BA35-60EFA39B7FC7" sourceRef="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40" targetRef="sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8"/>
+    <startEvent id="sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0" activiti:formKey="app:forms/start-form.jsf">
+      <outgoing>SequenceFlow_1</outgoing>
+    </startEvent>
+    <sequenceFlow id="SequenceFlow_1" name="" sourceRef="sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0" targetRef="ParallelGateway_1"/>
+    <parallelGateway id="ParallelGateway_1" name="Parallel Gateway">
+      <incoming>SequenceFlow_1</incoming>
+      <outgoing>SequenceFlow_2</outgoing>
+      <outgoing>SequenceFlow_4</outgoing>
+    </parallelGateway>
+    <sequenceFlow id="SequenceFlow_2" name="" sourceRef="ParallelGateway_1" targetRef="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2"/>
+    <sequenceFlow id="SequenceFlow_4" name="" sourceRef="ParallelGateway_1" targetRef="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40"/>
+    <boundaryEvent id="BoundaryEvent_1" name="" attachedToRef="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2">
+      <outgoing>SequenceFlow_11</outgoing>
+      <timerEventDefinition id="TimerEventDefinition_2">
+        <timeDuration xsi:type="tFormalExpression">PT5M</timeDuration>
+      </timerEventDefinition>
+    </boundaryEvent>
+    <sequenceFlow id="SequenceFlow_11" name="" sourceRef="BoundaryEvent_1" targetRef="UserTask_3"/>
+    <userTask id="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2" activiti:formKey="app:forms/approveBudget.jsf" activiti:assignee="#{travelApplicationController.getProjectLeader(projectNumber)}" name="Reisebudget genehmigen" implementation="webService">
+      <incoming>SequenceFlow_2</incoming>
+      <incoming>SequenceFlow_12</incoming>
+      <outgoing>sid-5F66126F-4394-4D7D-8901-924A6580A04D</outgoing>
+    </userTask>
+    <sequenceFlow id="sid-5F66126F-4394-4D7D-8901-924A6580A04D" sourceRef="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2" targetRef="sid-0925325B-FE23-482E-80F8-AB9D5F334415"/>
     <exclusiveGateway id="sid-0925325B-FE23-482E-80F8-AB9D5F334415" name="Budget &#xD;&#xA;genehmigt?" gatewayDirection="Diverging">
       <incoming>sid-5F66126F-4394-4D7D-8901-924A6580A04D</incoming>
       <outgoing>sid-4A543851-7A9A-4990-84C7-E785A13A68C0</outgoing>
@@ -71,148 +116,235 @@
     <sequenceFlow id="sid-4A543851-7A9A-4990-84C7-E785A13A68C0" name="nein" sourceRef="sid-0925325B-FE23-482E-80F8-AB9D5F334415" targetRef="sid-43134180-FB6A-4ADE-B797-9C89156E43B5">
       <conditionExpression xsi:type="tFormalExpression">#{!approvedBudget}</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902" name="ja" sourceRef="sid-0925325B-FE23-482E-80F8-AB9D5F334415" targetRef="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40">
+    <sequenceFlow id="sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902" name="ja" sourceRef="sid-0925325B-FE23-482E-80F8-AB9D5F334415" targetRef="ParallelGateway_2">
       <conditionExpression xsi:type="tFormalExpression">#{approvedBudget}</conditionExpression>
     </sequenceFlow>
-    <userTask id="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2" activiti:formKey="app:forms/approveBudget.jsf" activiti:assignee="#{travelApplicationController.getProjectLeader(projectNumber)}" name="Reisebudget genehmigen" implementation="webService">
-      <incoming>SequenceFlow_1</incoming>
-      <outgoing>sid-5F66126F-4394-4D7D-8901-924A6580A04D</outgoing>
+    <endEvent id="sid-43134180-FB6A-4ADE-B797-9C89156E43B5" name="Dienstreise abgelehnt">
+      <incoming>sid-4A543851-7A9A-4990-84C7-E785A13A68C0</incoming>
+      <terminateEventDefinition id="TerminateEventDefinition_1"/>
+    </endEvent>
+    <userTask id="UserTask_3" activiti:assignee="volker.hauser" name="Zeitüberschreitung behandeln">
+      <incoming>SequenceFlow_11</incoming>
+      <outgoing>SequenceFlow_12</outgoing>
     </userTask>
-    <sequenceFlow id="sid-5F66126F-4394-4D7D-8901-924A6580A04D" sourceRef="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2" targetRef="sid-0925325B-FE23-482E-80F8-AB9D5F334415"/>
-    <association id="sid-770A0148-E98E-4583-AE04-BCE7F9F4F054" sourceRef="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C" targetRef="sid-8FFE24AF-64B5-4885-BE05-844124358B87"/>
+    <sequenceFlow id="SequenceFlow_12" name="" sourceRef="UserTask_3" targetRef="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2"/>
   </process>
   <bpmndi:BPMNDiagram id="sid-365fc128-870a-45ef-af30-ff54facc7ef3">
     <bpmndi:BPMNPlane id="sid-58d32aaa-f09f-4148-ad69-47c4f3121c40" bpmnElement="sid-9065ed36-1f35-4e12-97ca-aa1800cdbaf6">
       <bpmndi:BPMNShape id="sid-2B7F77AA-D29D-4FEE-86BE-4B98B73CE9D2_gui" bpmnElement="Dienstreiseantrag" isHorizontal="true">
-        <omgdc:Bounds height="693.87" width="1351.3229" x="0.0" y="0.0"/>
+        <omgdc:Bounds height="1125.0" width="1351.0" x="0.0" y="106.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="sid-F1D3D4EB-C7A3-43D1-8C8A-7FCC4E1B9CDF_gui" bpmnElement="sid-F1D3D4EB-C7A3-43D1-8C8A-7FCC4E1B9CDF" isHorizontal="true">
-        <omgdc:Bounds height="216.32611" width="1321.3229" x="30.0" y="0.0"/>
+        <omgdc:Bounds height="216.0" width="1321.0" x="30.0" y="106.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="sid-34AAD29D-295D-4140-88A8-B61C17632640_gui" bpmnElement="sid-34AAD29D-295D-4140-88A8-B61C17632640" isHorizontal="true">
-        <omgdc:Bounds height="222.47618" width="1321.3229" x="30.0" y="216.32611"/>
+        <omgdc:Bounds height="222.0" width="1321.0" x="30.0" y="321.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="sid-E56E3297-DF1D-4A5C-8FF3-B07E08A5A6A5_gui" bpmnElement="sid-E56E3297-DF1D-4A5C-8FF3-B07E08A5A6A5" isHorizontal="true">
-        <omgdc:Bounds height="255.06772" width="1321.3229" x="30.0" y="438.8023"/>
+        <omgdc:Bounds height="345.0" width="1321.0" x="30.0" y="542.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2_gui" bpmnElement="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2">
-        <omgdc:Bounds height="80.0" width="100.0" x="192.0" y="62.0"/>
+        <omgdc:Bounds height="80.0" width="100.0" x="228.0" y="0.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="sid-0925325B-FE23-482E-80F8-AB9D5F334415_gui" bpmnElement="sid-0925325B-FE23-482E-80F8-AB9D5F334415" isMarkerVisible="true">
-        <omgdc:Bounds height="40.0" width="40.0" x="361.0" y="82.0"/>
+        <omgdc:Bounds height="40.0" width="40.0" x="528.0" y="21.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="38.0" width="73.0" x="345.0" y="46.0"/>
+          <omgdc:Bounds height="40.0" width="73.0" x="512.0" y="192.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="sid-43134180-FB6A-4ADE-B797-9C89156E43B5_gui" bpmnElement="sid-43134180-FB6A-4ADE-B797-9C89156E43B5">
-        <omgdc:Bounds height="28.0" width="28.0" x="466.0" y="88.0"/>
+        <omgdc:Bounds height="28.0" width="28.0" x="636.0" y="26.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="22.0" width="131.0" x="415.0" y="121.0"/>
+          <omgdc:Bounds height="22.0" width="132.0" x="584.0" y="192.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0_gui" bpmnElement="sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0">
-        <omgdc:Bounds height="30.0" width="30.0" x="98.62709" y="87.06452"/>
+        <omgdc:Bounds height="30.0" width="30.0" x="98.0" y="26.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="113.0" y="192.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40_gui" bpmnElement="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40">
-        <omgdc:Bounds height="80.0" width="100.0" x="424.0" y="292.0"/>
+        <omgdc:Bounds height="80.0" width="100.0" x="228.0" y="262.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8_gui" bpmnElement="sid-2E0B9DF2-028A-494B-AA48-92E9AE226EC8" isMarkerVisible="true">
-        <omgdc:Bounds height="40.0" width="40.0" x="569.0" y="312.0"/>
+        <omgdc:Bounds height="40.0" width="40.0" x="372.0" y="401.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="38.0" width="73.0" x="553.0" y="276.0"/>
+          <omgdc:Bounds height="40.0" width="73.0" x="356.0" y="247.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="sid-01FEA99D-72A7-4548-8E3F-21765C9EF7ED_gui" bpmnElement="sid-01FEA99D-72A7-4548-8E3F-21765C9EF7ED">
-        <omgdc:Bounds height="28.0" width="28.0" x="674.0" y="318.0"/>
+        <omgdc:Bounds height="28.0" width="28.0" x="468.0" y="407.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="22.0" width="131.0" x="623.0" y="351.0"/>
+          <omgdc:Bounds height="22.0" width="132.0" x="416.0" y="322.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="sid-8F08CF95-BB81-408C-94FA-549568E0CB64_gui" bpmnElement="sid-8F08CF95-BB81-408C-94FA-549568E0CB64">
-        <omgdc:Bounds height="80.0" width="100.0" x="638.0" y="466.0"/>
+        <omgdc:Bounds height="80.0" width="100.0" x="638.0" y="570.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C_gui" bpmnElement="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C">
-        <omgdc:Bounds height="80.0" width="100.0" x="783.0" y="466.0"/>
+        <omgdc:Bounds height="80.0" width="100.0" x="768.0" y="452.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="sid-8FFE24AF-64B5-4885-BE05-844124358B87_gui" bpmnElement="sid-8FFE24AF-64B5-4885-BE05-844124358B87">
-        <omgdc:Bounds height="60.0" width="62.0" x="802.0" y="590.0"/>
+      <bpmndi:BPMNEdge id="sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902_gui" bpmnElement="sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902" targetElement="_BPMNShape_ParallelGateway_3">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="548.0" y="61.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="548.0" y="472.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="22.0" width="68.0" x="799.0" y="655.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="sid-D0BE7B00-821F-455A-841A-96C716AB2082_gui" bpmnElement="sid-D0BE7B00-821F-455A-841A-96C716AB2082">
-        <omgdc:Bounds height="28.0" width="28.0" x="928.0" y="492.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="22.0" width="89.0" x="898.0" y="525.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902_gui" bpmnElement="sid-C15F5BC7-CE39-4E89-A616-88F3ADAB1902">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="381.0" y="122.0"/>
-        <omgdi:waypoint xsi:type="omgdc:Point" x="382.0" y="332.0"/>
-        <omgdi:waypoint xsi:type="omgdc:Point" x="424.0" y="332.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="22.0" width="16.0" x="361.0" y="132.0"/>
+          <omgdc:Bounds height="22.0" width="16.0" x="535.0" y="192.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="sid-4A543851-7A9A-4990-84C7-E785A13A68C0_gui" bpmnElement="sid-4A543851-7A9A-4990-84C7-E785A13A68C0">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="401.0" y="102.0"/>
-        <omgdi:waypoint xsi:type="omgdc:Point" x="466.0" y="102.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="568.0" y="41.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="636.0" y="40.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="22.0" width="30.0" x="420.0" y="82.0"/>
+          <omgdc:Bounds height="22.0" width="30.0" x="587.0" y="192.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="sid-3A0AAC9E-226A-46D6-BA35-60EFA39B7FC7_gui" bpmnElement="sid-3A0AAC9E-226A-46D6-BA35-60EFA39B7FC7">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="524.0" y="332.0"/>
-        <omgdi:waypoint xsi:type="omgdc:Point" x="569.0" y="332.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="328.0" y="302.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="350.0" y="302.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="350.0" y="303.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="372.0" y="303.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="0.0" width="0.0" x="547.0" y="332.0"/>
+          <omgdc:Bounds height="0.0" width="0.0" x="350.0" y="303.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="sid-770A0148-E98E-4583-AE04-BCE7F9F4F054_gui" bpmnElement="sid-770A0148-E98E-4583-AE04-BCE7F9F4F054">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="833.0" y="546.0"/>
-        <omgdi:waypoint xsi:type="omgdc:Point" x="833.0" y="590.0"/>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC_gui" bpmnElement="sid-FD78F27A-4CE0-47FB-AB8D-D353FAEAC3BC">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="738.0" y="506.0"/>
-        <omgdi:waypoint xsi:type="omgdc:Point" x="783.0" y="506.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="738.0" y="492.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="768.0" y="492.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="0.0" width="0.0" x="761.0" y="506.0"/>
+          <omgdc:Bounds height="0.0" width="0.0" x="761.0" y="492.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="sid-5F66126F-4394-4D7D-8901-924A6580A04D_gui" bpmnElement="sid-5F66126F-4394-4D7D-8901-924A6580A04D">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="292.0" y="102.0"/>
-        <omgdi:waypoint xsi:type="omgdc:Point" x="361.0" y="102.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="328.0" y="40.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="528.0" y="41.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="0.0" width="0.0" x="315.0" y="102.0"/>
+          <omgdc:Bounds height="0.0" width="0.0" x="351.0" y="192.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="sid-4A3396E5-7F8A-4410-BB47-BB5DD4B6EDE1_gui" bpmnElement="sid-4A3396E5-7F8A-4410-BB47-BB5DD4B6EDE1">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="589.0" y="352.0"/>
-        <omgdi:waypoint xsi:type="omgdc:Point" x="590.0" y="506.0"/>
-        <omgdi:waypoint xsi:type="omgdc:Point" x="638.0" y="506.0"/>
+      <bpmndi:BPMNEdge id="sid-4A3396E5-7F8A-4410-BB47-BB5DD4B6EDE1_gui" bpmnElement="sid-4A3396E5-7F8A-4410-BB47-BB5DD4B6EDE1" targetElement="_BPMNShape_ParallelGateway_3">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="392.0" y="323.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="392.0" y="492.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="528.0" y="492.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="22.0" width="16.0" x="569.0" y="384.0"/>
+          <omgdc:Bounds height="22.0" width="16.0" x="372.0" y="355.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="sid-4CBCB96E-20DC-4B67-82B6-6971F57BA4F2_gui" bpmnElement="sid-4CBCB96E-20DC-4B67-82B6-6971F57BA4F2">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="609.0" y="332.0"/>
-        <omgdi:waypoint xsi:type="omgdc:Point" x="674.0" y="332.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="412.0" y="303.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="468.0" y="303.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="22.0" width="30.0" x="631.0" y="312.0"/>
+          <omgdc:Bounds height="22.0" width="30.0" x="434.0" y="283.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="sid-8DD9AEA7-E6A4-4079-B488-F4BBE0A44406_gui" bpmnElement="sid-8DD9AEA7-E6A4-4079-B488-F4BBE0A44406">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="883.0" y="506.0"/>
-        <omgdi:waypoint xsi:type="omgdc:Point" x="928.0" y="506.0"/>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0_gui" targetElement="_BPMNShape_ParallelGateway_2">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="128.0" y="41.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="156.0" y="41.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="0.0" width="0.0" x="906.0" y="506.0"/>
+          <omgdc:Bounds height="6.0" width="6.0" x="129.0" y="192.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="sid-AFA5C254-FAAE-4EF8-8AB1-D4FE36B121D0_gui" targetElement="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2_gui">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="128.0" y="102.0"/>
-        <omgdi:waypoint xsi:type="omgdc:Point" x="192.0" y="102.0"/>
+      <bpmndi:BPMNShape id="_BPMNShape_ParallelGateway_2" bpmnElement="ParallelGateway_1">
+        <omgdc:Bounds height="40.0" width="40.0" x="156.0" y="21.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="6.0" width="6.0" x="169.0" y="102.0"/>
+          <omgdc:Bounds height="22.0" width="105.0" x="124.0" y="192.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_ParallelGateway_2" targetElement="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="196.0" y="41.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="228.0" y="40.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="6.0" width="6.0" x="201.0" y="192.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ParallelGateway_3" bpmnElement="ParallelGateway_2">
+        <omgdc:Bounds height="40.0" width="40.0" x="528.0" y="590.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="22.0" width="105.0" x="496.0" y="517.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_ParallelGateway_3" targetElement="sid-8F08CF95-BB81-408C-94FA-549568E0CB64_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="568.0" y="492.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="638.0" y="492.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="6.0" width="6.0" x="605.0" y="492.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="_BPMNShape_ParallelGateway_2" targetElement="sid-CB073E45-6496-4A4F-9D00-21B6F78FAF40_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="176.0" y="61.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="176.0" y="302.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="228.0" y="302.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="6.0" width="6.0" x="173.0" y="192.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_6" bpmnElement="UserTask_1">
+        <omgdc:Bounds height="80.0" width="100.0" x="1032.0" y="452.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="sid-BEEFD619-22CE-498B-9E01-B8251098CF5C_gui" targetElement="_BPMNShape_ServiceTask_6">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="868.0" y="492.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="900.0" y="492.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="893.0" y="492.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_7" bpmnElement="UserTask_2">
+        <omgdc:Bounds height="80.0" width="100.0" x="1164.0" y="452.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="_BPMNShape_UserTask_6" targetElement="_BPMNShape_UserTask_7">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1132.0" y="492.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1164.0" y="492.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="1157.0" y="492.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_4" bpmnElement="EndEvent_1">
+        <omgdc:Bounds height="28.0" width="28.0" x="1296.0" y="478.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="22.0" width="67.0" x="1277.0" y="511.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7" sourceElement="_BPMNShape_UserTask_7" targetElement="_BPMNShape_EndEvent_4">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1264.0" y="492.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1296.0" y="492.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="1289.0" y="492.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_6" bpmnElement="ServiceTask_2">
+        <omgdc:Bounds height="80.0" width="100.0" x="900.0" y="452.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_10" bpmnElement="SequenceFlow_10" sourceElement="_BPMNShape_ServiceTask_6" targetElement="_BPMNShape_UserTask_6">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1000.0" y="492.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1032.0" y="492.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="6.0" width="6.0" x="1013.0" y="492.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_2" bpmnElement="BoundaryEvent_1">
+        <omgdc:Bounds height="28.0" width="28.0" x="290.0" y="66.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="6.0" width="6.0" x="301.0" y="192.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_8" bpmnElement="UserTask_3">
+        <omgdc:Bounds height="80.0" width="100.0" x="360.0" y="95.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_11" bpmnElement="SequenceFlow_11" sourceElement="_BPMNShape_BoundaryEvent_2" targetElement="_BPMNShape_UserTask_8">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="303.0" y="94.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="301.0" y="132.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="360.0" y="134.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="6.0" width="6.0" x="322.0" y="192.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_12" bpmnElement="SequenceFlow_12" sourceElement="_BPMNShape_UserTask_8" targetElement="sid-FB4D9F57-88FB-4F13-9FE7-DD462F72A9A2_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="406.0" y="175.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="404.0" y="193.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="276.0" y="192.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="277.0" y="80.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="6.0" width="6.0" x="349.0" y="197.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

@@ -10,12 +10,14 @@ public class EmailDelegate implements JavaDelegate {
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 
+		String destination = (String) execution.getVariable("destination");
+		
 		Email email = new SimpleEmail();
 		email.setHostName("192.168.17.1");
 		email.setAuthentication("test@camunda-t61.local", "cam123");
 
 		email.setFrom("test@camunda-t61.local");
-		email.setSubject("Betreff");
+		email.setSubject("Ihre Reise nach " + destination + " wurde gebucht");
 		email.setMsg("Text.");
 
 		email.addTo("test@camunda-t61.local");

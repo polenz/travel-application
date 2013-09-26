@@ -2,6 +2,7 @@ package org.camunda.bpm.demo.travelapplication.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,12 +18,17 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.namespace.QName;
 
 import org.camunda.bpm.demo.travelapplication.TravelApplicationBean;
 import org.camunda.bpm.demo.travelapplication.model.Project;
 import org.camunda.bpm.demo.travelapplication.model.TravelApplication;
+import org.camunda.bpm.demo.travelapplication.ws.Calculate;
+import org.camunda.bpm.demo.travelapplication.ws.CalculateService;
 import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.cdi.BusinessProcess;
+import org.camunda.bpm.engine.cdi.impl.ProcessVariableMap;
 import org.camunda.bpm.engine.identity.Group;
 import org.camunda.bpm.engine.identity.User;
 
@@ -30,7 +36,9 @@ import org.camunda.bpm.engine.identity.User;
 @ConversationScoped
 public class TravelApplicationController implements Serializable {
 
-  private static final long serialVersionUID = 4207226058317208043L;
+	private static final String WSDL_URL = "http://192.168.17.1:8080/travel-application-ws/Calculate?wsdl"; // "http://localhost:8080/travel-application/Calculate?wsdl";
+
+	private static final long serialVersionUID = 4207226058317208043L;
 
   private static Logger log = Logger.getLogger(TravelApplication.class.getName());
 
@@ -49,6 +57,9 @@ public class TravelApplicationController implements Serializable {
 
   @EJB
   private TravelApplicationBean travelApplicationBean;
+  
+  @Inject
+  private BusinessProcess businessProcess;
 
   public void startProcess(String processDefinitionKey, String callbackUrl) throws IOException {
     // set the process variable
@@ -172,6 +183,17 @@ public class TravelApplicationController implements Serializable {
         }
     }
     return userId;
+  }
+  
+  public double sum(double a, double b, double c) throws Exception {
+		CalculateService calculateService = new CalculateService(new URL(WSDL_URL), new QName(
+				"http://http.travelapplication.demo.bpm.camunda.org/",
+				"CalculateService"));
+		Calculate calculatePort = calculateService.getPort(Calculate.class);
+		double sum = calculatePort.sum(a, b, c);
+		businessProcess.setVariable("sum", sum);
+	return sum;
+	  
   }
 
 }

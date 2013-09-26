@@ -19,15 +19,15 @@
     <h:form id="form">
       <h:panelGrid columns="3">
        <h:outputLabel for="firstName" value="Vorname*" />
-       <h:inputText id="firstName" value="#{processVariables['firstName']}" required="true" requiredMessage="Bitte geben Sie Ihren Vornamen ein." />
+       <h:inputText disabled="true" id="firstName" value="#{processVariables['firstName']}" required="true" requiredMessage="Bitte geben Sie Ihren Vornamen ein." />
        <h:message for="firstName" style="color:red"/>
 
        <h:outputLabel for="lastName" value="Nachname*" />
-       <h:inputText id="lastName" value="#{processVariables['lastName']}" required="true" requiredMessage="Bitte geben Sie Ihren Nachnamen ein." />
+       <h:inputText disabled="true" id="lastName" value="#{processVariables['lastName']}" required="true" requiredMessage="Bitte geben Sie Ihren Nachnamen ein." />
        <h:message for="lastName" style="color:red"/>
 
        <h:outputLabel for="department" value="Abteilung*" />
-       <h:inputText id="department" value="#{processVariables['department']}" required="true" requiredMessage="Bitte geben Sie Ihre Abteilung ein." />
+       <h:inputText disabled="true" id="department" value="#{processVariables['department']}" required="true" requiredMessage="Bitte geben Sie Ihre Abteilung ein." />
        <h:message for="department" style="color:red"/>
 
        <h:outputLabel for="projectNumber" value="Projekt-Nr*" />

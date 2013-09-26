@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:f="http://java.sun.com/jsf/core" 
+  xmlns:h="http://java.sun.com/jsf/html"
+  template="/WEB-INF/templates/template.xhtml">
+
+  <ui:define name="content">
+
+  <h:head>
+    <f:metadata>
+      <f:viewParam id="processDefinitionKey" name="processDefinitionKey" />
+      <f:viewParam id="callbackUrl" name="callbackUrl" />
+      <f:event type="preRenderView" listener="#{travelApplicationForm.startTask()}" />
+    </f:metadata>
+  </h:head>
+  <h:body>
+    <h2>Reisebelege einreichen</h2>
+    <h:form id="form">
+     <h:panelGrid columns="2">
+      <h:outputLabel for="firstName" value="Vorname*" />
+      <h:inputText id="firstName" value="#{processVariables['firstName']}" disabled="true" />
+
+      <h:outputLabel for="lastName" value="Nachname*" />
+      <h:inputText id="lastName" value="#{processVariables['lastName']}" disabled="true" />
+
+      <h:outputLabel for="department" value="Abteilung*" />
+      <h:inputText id="department" value="#{processVariables['department']}" disabled="true" />
+
+      <h:outputLabel for="projectNumber" value="Projekt-Nr*" />
+      <h:selectOneMenu id="projectNumber" value="#{processVariables['projectNumber']}" disabled="true">
+       <f:selectItems value="#{travelApplicationController.getProjectList()}" var="p" itemLabel="#{p.number}" itemValue="#{p.number}" />
+      </h:selectOneMenu>
+
+      <h:outputLabel for="reason" value="Zweck der Reise*" />
+      <h:inputText id="reason" value="#{processVariables['reason']}" disabled="true" />
+
+      <h:outputLabel for="destination" value="Ziel der Reise*" />
+      <h:inputText id="destination" value="#{processVariables['destination']}" disabled="true" />
+
+      <h:outputLabel for="startDate" value="Abreisetag* (ggf. inkl. Uhrzeit)" />
+      <h:panelGroup>
+	      <h:inputText id="startDate" value="#{processVariables['startDate']}" disabled="true" >
+	         <f:convertDateTime pattern="dd-MM-yyyy" />
+	      </h:inputText>
+	
+	      <div class="bootstrap-timepicker pull-right">
+	        <h:inputText id="startTime" value="#{processVariables['startTime']}" disabled="true" style="width:40px; margin-left:3px">
+	          <f:convertDateTime pattern="HH:mm" />
+	        </h:inputText>
+	      </div>
+      </h:panelGroup>
+
+      <h:outputLabel for="returnDate" value="R&#252;ckreisetag* (ggf. inkl. Uhrzeit)" />
+      <h:panelGroup>
+	      <h:inputText id="returnDate" value="#{processVariables['returnDate']}" disabled="true" >
+	        <f:convertDateTime pattern="dd-MM-yyyy" />
+	      </h:inputText>
+	
+	      <div class="bootstrap-timepicker pull-right">
+	        <h:inputText id="returnTime" value="#{processVariables['returnTime']}" disabled="true" style="width:40px; margin-left:3px">
+	          <f:convertDateTime pattern="HH:mm" />
+	        </h:inputText>
+	      </div>
+	    </h:panelGroup>
+
+      <h:outputLabel for="costs" value="Gesch&#228;tzte Reisekosten*" />
+      <h:inputText id="costs" value="#{processVariables['costs']}" disabled="true" >
+        <f:convertNumber groupingUsed="false" pattern="0.00" />
+      </h:inputText>
+
+      <h:outputLabel for="preferredTransportationMeans" value="Bevorzugte Verkehrsmittel" />
+      <h:inputText id="preferredTransportationMeans" value="#{processVariables['preferredTransportationMeans']}" disabled="true" />
+
+      <h:outputLabel for="preferredAccommodation" value="Bevorzugte Unterkunft" />
+      <h:inputText id="preferredAccommodation" value="#{processVariables['preferredAccommodation']}" disabled="true" />
+     </h:panelGrid>
+
+     <br />
+
+     <h:outputLabel for="approvedBudget" value="Budget genehmigt" class="checkbox">
+      <h:selectBooleanCheckbox id="approvedBudget" value="#{processVariables['approvedBudget']}" disabled="true" />
+     </h:outputLabel>
+     <h:outputLabel for="approvedTravel" value="Reise genehmigt" class="checkbox">
+      <h:selectBooleanCheckbox id="approvedTravel" value="#{processVariables['approvedTravel']}" disabled="true" />
+     </h:outputLabel>
+
+     <br />
+
+     <h:commandButton id="submit_button" value="Reise buchen" action="#{travelApplicationForm.completeTask()}" class="btn"/>
+    </h:form>
+  </h:body>
+
+  </ui:define>
+</ui:composition>
