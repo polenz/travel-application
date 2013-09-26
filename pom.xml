@@ -179,12 +179,12 @@
             </execution>
             <execution>
               <id>generate-stubs</id>
-              <phase>generate-test-sources</phase>
+              <phase>generate-sources</phase>
               <goals>
                 <goal>wsimport</goal>
               </goals>
               <configuration>
-                <wsdlDirectory>${project.build.directory}/generated-sources/wsdl</wsdlDirectory>
+                <wsdlDirectory>src/main/resources/wsdl</wsdlDirectory>
                 <wsdlFiles>
                   <wsdlFile>CalculateService.wsdl</wsdlFile>
                 </wsdlFiles>
@@ -198,6 +198,20 @@
 			<artifactId>build-helper-maven-plugin</artifactId>
 			<version>1.8</version>
 			<executions>
+				<execution>
+					<!-- Adds generated sources to Maven compile build path -->
+					<id>add-source</id>
+					<phase>generate-sources</phase>
+					<goals>
+						<goal>add-source</goal>
+					</goals>
+					<configuration>
+						<sources>
+							<source>${project.build.directory}/generated-sources/wsdl</source>
+							<source>${project.build.directory}/generated-sources/wsimport</source>
+						</sources>
+					</configuration>
+				</execution>
 				<execution>
 					<!-- Adds generated sources to Maven test build path -->
 					<id>add-test-source</id>
